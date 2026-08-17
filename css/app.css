@@ -105,7 +105,7 @@ svg.i44{width:44px;height:44px}
 .ring b{font-size:16px;font-weight:500}
 .ring span{font-size:12px;color:var(--sub2)}
 .ph{background:linear-gradient(135deg,#e8e2d6,#cfd6c6);border-radius:var(--r)}
-.ph--vine{background:linear-gradient(180deg,#9fc0e8 0 35%,#8fa86a 35% 100%)}
+.ph--vine{background:url("../Resources/Производители топ 5.png") center/cover no-repeat}
 .flag{font-size:16px;line-height:1}
 .chip{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 8px;border-radius:6px;
       background:#2E3033;color:#fff;font-size:12px;font-weight:500}
@@ -138,7 +138,7 @@ svg.i44{width:44px;height:44px}
 .medal--2 span{font-size:7px;letter-spacing:.5px}
 .gal__tag{position:absolute;top:8px;right:8px;height:28px;padding:0 10px;border-radius:6px;
           background:var(--bg2);color:var(--sub1);font-size:14px;display:grid;place-items:center}
-.bottle{width:auto;height:520px}
+.bottle{width:auto;height:520px;object-fit:contain}
 .gal__main .bottle{height:560px}
 .thumb .bottle{height:46px}
 .pod__b .bottle{height:155px;margin:0 auto}
@@ -200,6 +200,7 @@ svg.i44{width:44px;height:44px}
        border:1px solid var(--border);border-radius:var(--r-lg)}
 .maker__img{width:86px;height:86px;border-radius:var(--r);flex:none}
 .maker__txt{flex:1;min-width:0}
+.maker__logo{width:88px;height:88px;object-fit:contain;flex:none}
 
 .specs{display:grid;grid-template-columns:1fr 1fr;gap:0 44px}
 .spec{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
@@ -292,7 +293,7 @@ svg.i44{width:44px;height:44px}
 
 .geo{display:grid;grid-template-columns:1fr 1fr;gap:80px}
 .map-card{display:grid;justify-items:center;gap:24px}
-.map-card__img{width:100%}
+.map-card__img{width:100%;height:auto}
 .stat-list{display:grid}
 .stat-h{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px}
 .stat-h__l{display:flex;align-items:center;gap:8px;font-size:24px;font-weight:500}

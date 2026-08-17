@@ -92,8 +92,20 @@ const FOOTER = `
   </div>
 </footer>`;
 
-/* ---- бутылка-заглушка вместо фото-ассетов из Figma ---- */
+/* ---- фото-ассеты из Figma (папка Resources) ---- */
+const PHOTO = {
+  inici:    'Resources/Винный погреб.png',   // Мерум Приорати Иниси, фон прозрачный
+  iniciSq:  'Resources/Напитки топ 5.png',   // он же, квадратный кадр на белом фоне
+  aimery:   'Resources/Бутылка география.png',
+  barbera:  'Resources/2 место.png',
+  bellevue: 'Resources/3 место.png',
+  soave:    'Resources/4 место.png',
+};
+
+/* Фото бутылки по ключу из PHOTO; hex-значение рисует заглушку. */
 function bottle(cls = 'bottle', label = '#7a1220') {
+  const src = PHOTO[label];
+  if (src) return `<img class="${cls}" src="${encodeURI(src)}" alt="" loading="lazy">`;
   return `<svg class="${cls}" viewBox="0 0 60 200" fill="none">
     <path d="M25 4h10v42c0 8 12 18 12 34v108a8 8 0 0 1-8 8H21a8 8 0 0 1-8-8V80c0-16 12-26 12-34V4Z"
           fill="${label}" stroke="rgba(0,0,0,.15)"/>
