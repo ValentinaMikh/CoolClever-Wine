@@ -348,3 +348,13 @@ body.plain{background:var(--white)}
 .award__txt{display:grid;gap:2px}
 .award__txt .row{gap:4px}
 .store__i svg{color:var(--text)}
+
+/* ---------- mobile ---------- */
+@media (max-width:720px){
+  .geo{grid-template-columns:minmax(0,1fr);gap:32px}
+  .strow{flex-wrap:wrap;row-gap:4px}
+  .strow:has(.strow__v:not(:empty)) .strow__n{flex:1 1 auto;min-width:0}
+  .strow:has(.strow__v:not(:empty))>.pips,
+  .strow:has(.strow__v:not(:empty))>.mut3{order:1;margin-left:auto}
+  .strow:has(.strow__v:not(:empty)) .strow__v{order:2;flex:0 0 100%}
+}

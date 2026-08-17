@@ -553,7 +553,11 @@ html[data-toast="on"] .toast{transform:translateX(-50%)}
   .wdg{padding:16px}
   .tp-btn{right:12px;bottom:12px;padding:8px 14px;font-size:13px}
   .nutri{flex-wrap:wrap}
-  .strow{flex-wrap:wrap}
+  .strow{flex-wrap:wrap;row-gap:4px}
+  .strow:has(.strow__v:not(:empty)) .strow__n{flex:1 1 auto;min-width:0}
+  .strow:has(.strow__v:not(:empty))>.pips,
+  .strow:has(.strow__v:not(:empty))>.mut3{order:1;margin-left:auto}
+  .strow:has(.strow__v:not(:empty)) .strow__v{order:2;flex:0 0 100%}
   .worldmap__t h1{font-size:24px}
   .cats{grid-template-columns:repeat(2,1fr)}
   .modal__win{padding:16px;top:8px}
