@@ -1,9 +1,1592 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-page="product">
 <head>
 <meta charset="utf-8">
-<title>Web Talk 26 — прототип</title>
-<meta http-equiv="refresh" content="0; url=product.html">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Web Talk 26 — прототип (КуулКлевер · Сомелье)</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap');
+
+/* ---------- tokens (Figma variables) ---------- */
+:root{
+  --text:#1E1E1E; --sub1:#4F4F4F; --sub2:#808080; --sub3:#BCBCBC;
+  --border:#E5E5E5; --border2:#D6D6D6;
+  --white:#fff; --bg1:#F7F7F7; --bg2:#E3E4E4;
+  --primary:#80BA27; --primary-dark:#5B8816; --primary-bg:#EEFCD9;
+  --somelie:#C6026C; --secondary:#F8A42A; --accent:#F45600; --express:#EBB35F;
+  --r:8px; --r-lg:16px; --r-xl:24px;
+  --shadow:0 0 4px rgba(0,0,0,.02), 0 2px 8px rgba(0,0,0,.04), 0 6px 18px rgba(0,0,0,.06);
+  --page:1440px; --gut:48px;
+}
+
+/* ---------- base ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font:400 16px/1.4 Ubuntu,system-ui,-apple-system,sans-serif;color:var(--text);background:var(--bg1)}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+input{font:inherit;border:0;background:none;outline:none;width:100%}
+img{display:block;max-width:100%}
+h1,h2,h3,h4,p{margin:0}
+svg{flex:none}
+svg.lucide{width:24px;height:24px;stroke-width:1.6;flex:none}
+svg.i16{width:16px;height:16px}
+svg.i18{width:18px;height:18px}
+svg.i20{width:20px;height:20px}
+svg.i44{width:44px;height:44px}
+
+.wrap{max-width:var(--page);margin:0 auto;padding:0 var(--gut)}
+.card{background:var(--white);border-radius:var(--r-xl)}
+.pane{background:var(--bg1);border-radius:var(--r-lg)}
+.row{display:flex;align-items:center;gap:8px}
+.col{display:flex;flex-direction:column}
+.sep{height:1px;background:var(--border);border:0;margin:0}
+.vr{width:1px;height:20px;background:var(--border2);flex:none}
+.mut{color:var(--sub2)} .mut1{color:var(--sub1)} .mut3{color:var(--sub3)}
+.pink{color:var(--somelie)} .fw5{font-weight:500}
+.h1{font-size:36px;font-weight:500;line-height:1.2}
+.h2{font-size:36px;font-weight:500;line-height:1.2}
+.h3{font-size:24px;font-weight:500;line-height:1.2}
+.h4{font-size:18px;font-weight:500;line-height:1.2}
+.p14{font-size:14px;line-height:1.4}
+.p12{font-size:12px;line-height:1.33}
+.ellip{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* dashed "link button" from the kit */
+.lnk{display:inline-flex;align-items:center;gap:4px;font-size:14px;line-height:1.4;
+     border-bottom:1px dashed currentColor;cursor:pointer;color:var(--text)}
+.lnk--pink{color:var(--somelie)}
+.lnk--solid{border-bottom-style:solid}
+.lnk:hover{opacity:.7}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;position:relative;
+     padding:12px 24px;border-radius:var(--r);font-weight:500;font-size:16px;line-height:24px;
+     background:var(--bg1);transition:.15s filter}
+.btn:hover{filter:brightness(.96)}
+.btn--somelie{background:var(--somelie);color:#fff}
+.btn--secondary{background:var(--secondary);color:#fff}
+.btn--icon{padding:12px}
+.btn--lg{height:56px}
+.btn--dark{background:#2E3033;color:#fff;padding:8px 16px;border-radius:20px;font-size:14px}
+.badge{position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;padding:0 4px;border-radius:12px;
+       background:var(--accent);color:#fff;font-size:12px;font-weight:500;line-height:16px;text-align:center}
+.badge--dot{min-width:10px;height:10px;padding:0}
+
+/* ---------- header ---------- */
+.hdr{background:var(--white);position:sticky;top:0;z-index:20}
+.hdr__in{max-width:var(--page);margin:0 auto;padding:8px var(--gut);display:flex;flex-direction:column;gap:8px}
+.hdr__top{display:flex;align-items:center;justify-content:space-between;gap:16px;height:36px;padding:0 8px;font-size:14px}
+.hdr__deliv{display:flex;align-items:center;gap:8px;min-width:0;flex:1}
+.hdr__deliv .ellip{max-width:210px}
+.hdr__links{display:flex;align-items:center;gap:8px}
+.hdr__links a{padding:8px;border-radius:var(--r)}
+.hdr__links a:hover{background:var(--bg1)}
+.hdr__act{display:flex;align-items:center;gap:8px;padding:4px 0}
+.logo{width:46px;height:46px;border-radius:50%;background:var(--primary-bg);display:grid;place-items:center;
+      font-size:24px;flex:none}
+.search{flex:1;min-width:0;display:flex;align-items:center;gap:8px;padding:16px;
+        border:1px solid var(--border);border-radius:var(--r);color:var(--sub1)}
+.search input::placeholder{color:var(--sub1)}
+
+/* ---------- footer ---------- */
+.ftr{background:var(--bg1);margin-top:24px}
+.ftr__in{max-width:var(--page);margin:0 auto;padding:32px var(--gut);
+         display:grid;grid-template-columns:260px repeat(2,1fr) 240px;gap:32px}
+.ftr h4{font-size:14px;font-weight:500;margin-bottom:12px}
+.ftr ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:14px}
+.ftr a:hover{color:var(--somelie)}
+.ftr__phone{font-size:20px;font-weight:500;margin:12px 0 8px}
+.ftr__stores{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.ftr__store{display:flex;align-items:center;gap:8px;background:#111;color:#fff;border-radius:var(--r);padding:8px 12px;font-size:12px}
+.ftr__bottom{border-top:1px solid var(--border);}
+.ftr__bottom-in{max-width:var(--page);margin:0 auto;padding:16px var(--gut);display:flex;
+                align-items:center;justify-content:space-between;gap:16px;font-size:12px;color:var(--sub2)}
+.ftr__soc{display:flex;align-items:center;gap:16px}
+.ftr__soc-g{display:flex;align-items:center;gap:8px}
+
+/* ---------- generic bits used on several pages ---------- */
+.ring{--v:16;width:72px;height:72px;border-radius:50%;flex:none;display:grid;place-items:center;
+      background:conic-gradient(var(--somelie) calc(var(--v)*1%), var(--bg2) 0)}
+.ring__in{width:58px;height:58px;border-radius:50%;background:var(--white);display:grid;place-items:center;line-height:1.1}
+.ring b{font-size:16px;font-weight:500}
+.ring span{font-size:12px;color:var(--sub2)}
+.ph{background:linear-gradient(135deg,#e8e2d6,#cfd6c6);border-radius:var(--r)}
+.ph--vine{background:linear-gradient(180deg,#9fc0e8 0 35%,#8fa86a 35% 100%)}
+.flag{font-size:16px;line-height:1}
+.chip{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 8px;border-radius:6px;
+      background:#2E3033;color:#fff;font-size:12px;font-weight:500}
+
+/* ===================================================================
+   PRODUCT PAGE
+   =================================================================== */
+.sect{margin-bottom:16px;padding:24px}
+
+/* breadcrumbs line */
+.liner{display:flex;align-items:center;justify-content:space-between;gap:16px;
+       padding:0 16px 24px;font-size:14px;color:var(--sub1)}
+.crumbs{display:flex;align-items:center;gap:8px;min-width:0}
+.crumbs a:hover{color:var(--somelie)}
+.liner__acts{display:flex;align-items:center;gap:16px}
+.liner__acts button{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--sub1)}
+
+.pdp{display:grid;grid-template-columns:424px minmax(0,1fr) 420px;gap:0}
+
+/* photo */
+.gal{padding:12px}
+.gal__main{position:relative;height:640px;background:var(--bg1);border-radius:var(--r-lg);
+           display:grid;place-items:center;overflow:hidden}
+.medal{position:absolute;left:8px;width:80px;height:80px;border-radius:50%;display:grid;place-items:center;
+       text-align:center;line-height:1.05;color:#5b4a12;font-weight:700;
+       background:radial-gradient(circle at 35% 30%,#ffe89a,#e8b93c 60%,#c99a1e);box-shadow:var(--shadow)}
+.medal--1{top:8px;font-size:9px;letter-spacing:.4px}
+.medal--2{top:96px}
+.medal--2 b{font-size:24px;display:block}
+.medal--2 span{font-size:7px;letter-spacing:.5px}
+.gal__tag{position:absolute;top:8px;right:8px;height:28px;padding:0 10px;border-radius:6px;
+          background:var(--bg2);color:var(--sub1);font-size:14px;display:grid;place-items:center}
+.bottle{width:auto;height:520px}
+.gal__main .bottle{height:560px}
+.thumb .bottle{height:46px}
+.pod__b .bottle{height:155px;margin:0 auto}
+.wine__b .bottle{height:64px}
+.cellar__i .bottle{height:150px;margin:8px auto}
+.gal__thumbs{display:flex;gap:8px;margin-top:16px}
+.thumb{width:60px;height:60px;border-radius:var(--r);border:1px solid var(--border);overflow:hidden;
+       display:grid;place-items:center;cursor:pointer}
+.thumb:not(.ph){background:var(--bg1)}
+.thumb.is-on{border-color:var(--somelie);box-shadow:0 0 0 1px var(--somelie)}
+
+/* main info column */
+.info{padding:16px 24px;display:flex;flex-direction:column;gap:40px}
+.info__head{display:flex;flex-direction:column;gap:12px}
+.info__sub{font-size:24px;color:var(--sub2)}
+.tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:14px}
+.tags i{width:4px;height:4px;border-radius:50%;background:var(--sub3)}
+.lbl{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:var(--sub1)}
+.years{display:flex;gap:8px;margin-top:12px}
+.year{height:38px;padding:0 14px;border:1px solid var(--border);border-radius:var(--r);
+      display:grid;place-items:center;font-size:16px;cursor:pointer}
+.year.is-on{border-color:var(--somelie);color:var(--somelie)}
+.year.is-off{color:var(--sub3);cursor:not-allowed}
+.quote{font-style:italic;font-size:16px;line-height:1.4;color:var(--text)}
+.rates{display:flex;gap:24px}
+.rate__top{display:flex;align-items:center;gap:6px;font-size:18px;font-weight:500}
+.rate__sub{font-size:14px;color:var(--sub2);margin-top:4px}
+.awards{display:flex;gap:16px}
+.award{display:flex;align-items:center;gap:10px}
+.award__n{width:36px;height:36px;border-radius:50%;background:var(--bg1);display:grid;place-items:center;
+          font-weight:500;font-size:14px;flex:none}
+.award__n--gold{background:radial-gradient(circle at 35% 30%,#ffe89a,#e8b93c 60%,#c99a1e);color:#5b4a12}
+
+/* price */
+.buy{padding:16px}
+.buy__card{padding:24px;border-radius:var(--r-lg);background:var(--bg1)}
+.buy__price{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.buy__price b{font-size:32px;font-weight:500;white-space:nowrap}
+.kegli{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px;
+       padding:6px 10px;border-radius:var(--r);background:var(--primary-bg);font-size:14px;color:var(--primary-dark)}
+.kegli__v{display:flex;align-items:center;gap:6px;color:var(--text);font-weight:500}
+.buy__acts{display:flex;gap:8px;margin-top:16px}
+.buy__acts .btn{flex:1}
+.buy__fav{width:56px;height:56px;border-radius:var(--r);border:1px solid var(--border);background:#fff;
+          display:grid;place-items:center;flex:none}
+.stock{display:flex;align-items:center;gap:8px;margin-top:16px;padding:16px;border-radius:var(--r-lg);
+       background:var(--bg1);font-size:16px}
+
+/* characteristics */
+.chars{display:grid;grid-template-columns:minmax(0,1fr) 408px;gap:32px}
+.blk{margin-bottom:56px}
+.blk:last-child{margin-bottom:0}
+.blk__t{display:flex;align-items:center;gap:12px;font-size:24px;font-weight:500;margin-bottom:16px}
+.dot-ico{width:32px;height:32px;border-radius:50%;background:var(--somelie);color:#fff;display:grid;place-items:center;flex:none}
+.blk p{color:var(--text);line-height:1.4}
+.links-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:16px;font-size:14px}
+
+.maker{display:flex;align-items:center;gap:16px;padding:16px;background:var(--white);
+       border:1px solid var(--border);border-radius:var(--r-lg)}
+.maker__img{width:86px;height:86px;border-radius:var(--r);flex:none}
+.maker__txt{flex:1;min-width:0}
+
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:0 44px}
+.spec{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+      padding:16px 0;border-bottom:1px solid var(--border);font-size:14px}
+.spec__n{color:var(--sub1);flex:none;width:45%}
+.spec__v{text-align:right;color:var(--somelie)}
+.spec__v--plain{color:var(--text)}
+
+.nutri{display:flex;align-items:center;gap:16px}
+.nutri__i{padding:8px 0;min-width:150px}
+.nutri__i b{font-size:18px;font-weight:500}
+.nutri__i span{display:block;font-size:14px;color:var(--sub2)}
+.nutri .vr{height:58px}
+
+/* right widgets */
+.wdg{padding:24px;border-radius:var(--r-lg);background:var(--bg1);margin-bottom:16px}
+.wdg--link{display:block;transition:.15s background}
+.wdg--link:hover{background:var(--bg2)}
+.country{display:flex;align-items:center;gap:16px}
+.country__img{position:relative;width:82px;height:82px;border-radius:50%;flex:none;overflow:hidden}
+.country__flag{position:absolute;right:0;bottom:0;width:28px;height:28px;border-radius:50%;
+               background:#fff;display:grid;place-items:center;font-size:16px;overflow:hidden}
+.country__txt{flex:1;min-width:0}
+.country__txt b{font-size:24px;font-weight:500;display:block}
+.country__txt span{color:var(--sub1);font-size:18px}
+.trip{display:flex;align-items:center;gap:16px;padding:16px 0}
+.trip__t{flex:1;min-width:0}
+.trip__t b{display:block;font-size:18px;font-weight:500}
+.trip__t span{display:inline-flex;align-items:center;gap:4px;color:var(--sub1);font-size:14px;margin-top:4px}
+.trip__img{width:114px;height:64px;border-radius:var(--r);flex:none}
+.spark{display:flex;align-items:flex-end;gap:6px;height:56px}
+.spark i{width:8px;border-radius:4px;background:var(--somelie);display:block}
+
+.store{display:grid;gap:24px;text-align:center}
+.store__ico{display:flex;align-items:center;justify-content:center;gap:24px}
+.store__i{position:relative;width:60px;height:60px;display:grid;place-items:center}
+.store__i svg{width:44px;height:44px}
+.store__i::after{content:'';position:absolute;right:4px;bottom:4px;width:18px;height:18px;border-radius:50%;
+                 background:var(--bg2)}
+.store__i.is-on::after{background:var(--somelie)}
+.temp b{display:block;font-size:24px;font-weight:400;margin-top:4px}
+.glass{width:110px;height:150px;margin:0 auto}
+.tastes{text-align:left;display:grid;gap:16px}
+.tastes b{display:block;font-size:16px;font-weight:500;margin-bottom:4px}
+.tastes p{font-size:14px;line-height:1.4}
+
+/* ===================================================================
+   TRAVELS PAGE
+   =================================================================== */
+.layout{display:grid;grid-template-columns:320px minmax(0,1fr);gap:24px;padding:16px var(--gut) 32px}
+.side{display:flex;flex-direction:column;gap:24px}
+.side__me{padding:16px;border-radius:var(--r-lg);background:var(--bg1)}
+.side__me-t{display:flex;align-items:center;justify-content:space-between;font-size:18px;font-weight:500}
+.side__me-u{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:14px}
+.side__group{margin-bottom:8px}
+.side__h{font-size:14px;color:var(--sub3);padding:12px 16px}
+.nav{display:flex;align-items:center;gap:16px;height:52px;padding:0 16px;border-radius:var(--r);font-size:16px}
+.nav:hover{background:var(--bg1)}
+.nav.is-on{background:var(--somelie);color:#fff}
+.nav--exit{color:var(--accent)}
+
+.body-col{display:flex;flex-direction:column;gap:56px}
+.sec__t{font-size:24px;font-weight:500;margin-bottom:24px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:80px}
+
+.podium{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;align-items:end}
+.pod{border-radius:var(--r-lg);padding:20px 12px;text-align:center;display:grid;gap:16px;justify-items:center}
+.pod--1{background:#FFF8E7} .pod--2{background:var(--bg1)} .pod--3{background:#FBF2E8}
+.pod__m{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff}
+.pod--1 .pod__m{width:48px;height:48px;background:radial-gradient(circle at 35% 30%,#ffe89a,#e8b93c 60%,#c99a1e);color:#7a5c12}
+.pod--2 .pod__m{background:radial-gradient(circle at 35% 30%,#f2f2f2,#c9c9c9 60%,#a9a9a9);color:#5f5f5f}
+.pod--3 .pod__m{background:radial-gradient(circle at 35% 30%,#f2d0a8,#c98c47 60%,#a8702f);color:#5f3b12}
+.pod__b{height:155px}
+.pod__n{font-size:14px;color:var(--sub1)}
+
+.bars{display:grid}
+.bar{display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--border);font-size:16px}
+.bar:last-child{border-bottom:0}
+.bar__n{flex:none;width:120px}
+.bar__t{flex:1;display:flex;justify-content:flex-end}
+.bar__v{height:12px;border-radius:6px;background:var(--somelie)}
+
+.counters{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,1fr);gap:16px}
+.cnt{position:relative;padding:24px;border-radius:var(--r-lg);background:var(--bg1)}
+.cnt b{font-size:36px;font-weight:500;line-height:1.1;display:block}
+.cnt span{font-size:14px;color:var(--sub1)}
+.cnt--geo{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.cnt--geo .cnt__r{font-size:16px;font-weight:500;color:var(--sub1);max-width:120px}
+.cnt__ext{position:absolute;top:16px;right:16px;color:var(--sub1)}
+
+.geo{display:grid;grid-template-columns:1fr 1fr;gap:80px}
+.map-card{display:grid;justify-items:center;gap:24px}
+.map-card__img{width:100%}
+.stat-list{display:grid}
+.stat-h{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px}
+.stat-h__l{display:flex;align-items:center;gap:8px;font-size:24px;font-weight:500}
+.stat-h__r{font-size:14px;color:var(--sub1)}
+.strow{display:flex;align-items:center;gap:8px;padding:12px 0;border-bottom:1px solid var(--border);font-size:16px}
+.strow:last-child{border-bottom:0}
+.strow__n{font-weight:500;min-width:120px}
+.strow__v{flex:1;color:var(--sub1)}
+.strow__v b{color:var(--text);font-weight:400}
+.pips{display:flex;gap:4px;justify-content:flex-end}
+.pips i{width:12px;height:12px;border-radius:6px;background:var(--bg2)}
+.pips i.on{background:var(--somelie)}
+
+/* ===================================================================
+   MAP PAGE
+   =================================================================== */
+.mappage{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:24px;padding:24px 48px}
+.worldmap{position:relative}
+.worldmap__t{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.worldmap__t h1{font-size:32px;font-weight:500}
+.tip{position:absolute;left:26%;top:44%;display:flex;align-items:center;gap:12px;background:#fff;
+     border-radius:40px;padding:8px 16px 8px 8px;box-shadow:var(--shadow)}
+.tip__img{width:48px;height:48px;border-radius:50%;flex:none}
+.tip b{display:block;font-size:18px;font-weight:500}
+.tip span{font-size:14px;color:var(--sub1)}
+.tip__v{font-size:24px;font-weight:500;margin-left:16px}
+.tabs{display:flex;background:var(--bg1);border-radius:var(--r);padding:2px;margin-bottom:16px}
+.tab{flex:1;height:40px;border-radius:6px;display:grid;place-items:center;font-size:14px;color:var(--sub1)}
+.tab.is-on{background:#fff;color:var(--text);font-weight:500;box-shadow:var(--shadow)}
+.wine{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.wine__b{width:44px;height:64px;flex:none}
+.wine>span{display:grid;gap:4px;min-width:0}
+.wine__t{font-size:13px;line-height:1.35;font-weight:500}
+.wine__s{font-size:12px;color:var(--sub2);margin:4px 0}
+.wine__r{display:flex;align-items:center;gap:6px;font-size:12px}
+
+.cellar{background:#2A2A2A;color:#fff;border-radius:var(--r-xl);padding:24px;margin-top:24px}
+.cellar__h{display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:18px;font-weight:500}
+.cellar__tabs{display:flex;gap:2px;background:#3A3A3A;border-radius:var(--r);padding:2px;margin:16px 0}
+.cellar__tab{flex:1;height:40px;border-radius:6px;display:flex;align-items:center;justify-content:center;gap:8px;
+             font-size:14px;color:#ddd}
+.cellar__tab.is-on{background:#6B2231;color:#fff}
+.cellar__grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.cellar__i{background:#1F1F1F;border-radius:var(--r);padding:12px;text-align:center;display:grid;gap:4px}
+.cellar__i .bottle{width:70px;height:150px;margin:8px auto}
+.cellar__i small{font-size:11px;color:#bbb}
+.stars{color:var(--secondary);font-size:12px;letter-spacing:1px}
+.disclaimer{font-size:12px;line-height:1.5;color:var(--sub2);padding:24px 0}
+
+/* --- правки после визуальной проверки --- */
+body.plain{background:var(--white)}
+.two>*,.geo>*,.layout>*,.body-col>*{min-width:0}
+.award__txt{display:grid;gap:2px}
+.award__txt .row{gap:4px}
+.store__i svg{color:var(--text)}
+
+
+/* ================= РЕЖИМ ТЕСТИРОВЩИКА ================= */
+html{overflow-x:hidden}
+.page{display:none}
+html[data-page="product"] #page-product,
+html[data-page="travels"] #page-travels,
+html[data-page="map"]     #page-map{display:block}
+html[data-page="travels"] body,html[data-page="map"] body{background:var(--white)}
+
+.tp-btn{position:fixed;right:20px;bottom:20px;z-index:120;display:flex;align-items:center;gap:8px;
+        background:#1c1c1e;color:#fff;border-radius:24px;padding:10px 18px;font-size:14px;font-weight:500;
+        box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.tp{position:fixed;inset:0 0 0 auto;width:360px;background:#17171a;color:#e9e9ec;z-index:130;
+    transform:translateX(100%);transition:transform .25s ease;overflow-y:auto;font-size:13px;
+    box-shadow:-8px 0 32px rgba(0,0,0,.3)}
+html[data-tp="on"] .tp{transform:none}
+html[data-tp="on"] body{margin-right:360px}
+.tp__h{position:sticky;top:0;background:#17171a;display:flex;align-items:center;justify-content:space-between;
+       padding:16px;border-bottom:1px solid #2c2c31;z-index:2}
+.tp__h b{font-size:15px}
+.tp__x{color:#8b8b93;font-size:20px;line-height:1}
+.tp__pages{display:flex;gap:4px;padding:12px 16px;border-bottom:1px solid #2c2c31}
+.tp__pages button{flex:1;padding:8px 4px;border-radius:6px;background:#232328;color:#b9b9c2;font-size:12px}
+.tp__pages button.on{background:var(--somelie);color:#fff}
+.tp-g{padding:16px;border-bottom:1px solid #2c2c31}
+.tp-g__t{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7a7a85;margin-bottom:12px}
+.tw{margin-bottom:16px}
+.tw:last-child{margin-bottom:0}
+.tw__l{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:6px}
+.tw__l b{font-weight:500;color:#f2f2f5}
+.tw__hint{font-size:11px;color:#7a7a85;line-height:1.35;margin-bottom:6px}
+.tw__opts{display:flex;flex-wrap:wrap;gap:4px}
+.tw__opts button{padding:6px 10px;border-radius:6px;background:#232328;color:#b9b9c2;font-size:12px;
+                 border:1px solid transparent}
+.tw__opts button.on{background:#2f2f36;border-color:var(--somelie);color:#fff}
+.tp__foot{padding:16px;display:flex;gap:8px}
+.tp__foot button{flex:1;padding:10px;border-radius:8px;background:#232328;color:#e9e9ec;font-size:12px}
+html[data-tp="on"] .tp-btn{display:none}
+.tp-mark{outline:1px dashed rgba(198,2,108,.6);outline-offset:2px}
+
+/* ---- эффекты твиков ---- */
+[data-kegli="off"] .kegli,
+[data-kegli="off"] .js-kegli-link{display:none}
+[data-millesime="off"] .js-millesime{display:none}
+[data-awards="off"] .js-awards{display:none}
+[data-ratings="off"] .js-ratings{display:none}
+[data-ratings="own"] .js-rate-ext{display:none}
+[data-trips="off"] .wdg--link{display:none}
+[data-maker="off"] .js-maker{display:none}
+[data-somelie="off"] .js-somelie{display:none}
+[data-somelie="short"] .js-somelie p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+[data-express="off"] .stock{display:none}
+[data-store="off"] .js-store{display:none}
+[data-gallery="off"] .gal__thumbs{display:none}
+[data-nutri="off"] .js-nutri{display:none}
+
+[data-podium="off"] .js-podium{display:none}
+[data-spend="off"] .js-spend{display:none}
+[data-share="off"] .js-share{display:none}
+[data-ratecnt="off"] .js-ratecnt{display:none}
+[data-progress="empty"] .js-has-data{display:none}
+.js-empty{display:none;text-align:center;padding:64px 24px;border-radius:var(--r-lg);background:var(--bg1)}
+[data-progress="empty"] .js-empty{display:block}
+.js-empty b{display:block;font-size:24px;font-weight:500;margin:16px 0 8px}
+
+[data-tooltip="off"] .tip{display:none}
+[data-cellar="off"] .js-cellar{display:none}
+[data-mapcta="off"] .js-mapcta{display:none}
+[data-disclaimer="off"] .disclaimer{display:none}
+[data-granularity="regions"] .js-gran-c{display:none}
+[data-granularity="countries"] .js-gran-r{display:none}
+
+[data-auth="guest"] .wdg--link,
+[data-auth="guest"] .js-auth{display:none}
+.js-guest{display:none}
+[data-auth="guest"] .js-guest{display:block}
+
+/* цена / наличие */
+.price-old{color:var(--sub3);text-decoration:line-through;font-size:18px;font-weight:400}
+.price-badge{background:var(--accent);color:#fff;border-radius:6px;padding:2px 8px;font-size:14px;font-weight:500}
+[data-promo="none"] .js-promo{display:none}
+[data-promo="loyalty"] .js-promo-disc{display:none}
+[data-promo="discount"] .js-promo-loy{display:none}
+[data-stock="out"] .js-instock,
+[data-stock="low"] .js-instock{display:none}
+.js-lowstock,.js-outstock{display:none}
+[data-stock="low"] .js-lowstock{display:flex}
+[data-stock="out"] .js-outstock{display:flex}
+[data-stock="out"] .buy__acts .btn--somelie{background:var(--bg2);color:var(--sub1);pointer-events:none}
+
+
+/* ============ дропдаун профиля / модальный каталог / тост ============ */
+.udrop{position:relative}
+.udrop__m{position:absolute;top:calc(100% + 8px);right:0;width:290px;background:#fff;border-radius:var(--r-lg);
+          box-shadow:var(--shadow);border:1px solid var(--border);padding:8px;z-index:50;display:none}
+.udrop.open .udrop__m{display:block}
+.udrop__i{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--r);font-size:14px}
+.udrop__i:hover{background:var(--bg1)}
+.udrop__i--ctx{background:var(--primary-bg)}
+.udrop__i small{display:block;font-size:11px;color:var(--sub1);margin-top:2px}
+html[data-navmode="contextual"] .udrop__m,
+html[data-navmode="dblclick"]   .udrop__m,
+html[data-navmode="classic"]    .udrop__m{display:none!important}
+
+.modal{position:fixed;inset:0;z-index:110;display:none}
+html[data-modal="on"] .modal{display:block}
+.modal__bg{position:absolute;inset:0;background:rgba(0,0,0,.45)}
+.modal__win{position:absolute;left:50%;top:24px;transform:translateX(-50%);width:min(1080px,calc(100% - 32px));
+            max-height:calc(100vh - 48px);overflow:auto;background:#fff;border-radius:var(--r-xl);padding:24px}
+.modal__h{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}
+.modal__x{font-size:22px;line-height:1;color:var(--sub1)}
+.recent{display:flex;align-items:center;gap:16px;padding:16px;border-radius:var(--r-lg);
+        background:var(--primary-bg);margin-bottom:24px}
+.recent .bottle{height:76px}
+.recent__t{flex:1;min-width:0}
+.recent__t b{display:block;font-size:18px;font-weight:500}
+.recent__lbl{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--primary-dark);font-weight:500}
+html[data-navmode="classic"] .recent,
+html[data-navmode="dblclick"] .recent{display:none}
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.cat{display:flex;align-items:center;gap:12px;padding:14px;border-radius:var(--r);background:var(--bg1);font-size:14px}
+.cat:hover{background:var(--bg2)}
+.cat span{font-size:20px}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(180%);z-index:115;
+       background:#1c1c1e;color:#fff;border-radius:12px;padding:12px 16px;font-size:14px;max-width:min(560px,92vw);
+       display:flex;gap:12px;align-items:center;transition:transform .25s;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+html[data-toast="on"] .toast{transform:translateX(-50%)}
+.toast a{color:#ffd98a;border-bottom:1px dashed currentColor}
+
+/* ================= АДАПТИВ ================= */
+@media (max-width:1360px){
+  :root{--gut:24px}
+  .pdp{grid-template-columns:380px minmax(0,1fr) 380px}
+  .two,.geo{gap:40px}
+}
+@media (max-width:1180px){
+  .pdp{grid-template-columns:340px minmax(0,1fr)}
+  .buy{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+  .chars{grid-template-columns:minmax(0,1fr)}
+  .chars aside{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+  .layout{grid-template-columns:260px minmax(0,1fr)}
+  .mappage{grid-template-columns:minmax(0,1fr)}
+  .cellar__grid{grid-template-columns:repeat(4,1fr)}
+  .ftr__in{grid-template-columns:1fr 1fr;gap:24px}
+}
+@media (max-width:900px){
+  .layout{grid-template-columns:minmax(0,1fr)}
+  .side{position:fixed;inset:0 auto 0 0;width:280px;background:#fff;z-index:60;overflow:auto;padding:16px;
+        transform:translateX(-100%);transition:.25s;box-shadow:var(--shadow)}
+  html[data-menu="on"] .side{transform:none}
+  .side-btn{display:inline-flex!important}
+  .two,.geo{grid-template-columns:minmax(0,1fr);gap:32px}
+  .counters{grid-template-columns:1fr 1fr}
+  .cellar__grid{grid-template-columns:repeat(3,1fr)}
+  .chars aside{grid-template-columns:1fr}
+}
+@media (max-width:720px){
+  :root{--gut:16px}
+  .h1,.h2{font-size:26px}
+  .h3,.sec__t,.blk__t{font-size:20px}
+  .sect{padding:16px;border-radius:var(--r-lg)}
+  .hdr__top{display:none}
+  .hdr__act{flex-wrap:wrap}
+  .search{order:9;flex:1 0 100%}
+  .pdp{grid-template-columns:minmax(0,1fr)}
+  .gal__main{height:420px}
+  .gal__main .bottle{height:360px}
+  .medal{width:56px;height:56px}
+  .medal--2{top:72px}
+  .buy{grid-template-columns:1fr}
+  .info{padding:16px 0;gap:28px}
+  .liner{flex-direction:column;align-items:flex-start;gap:12px}
+  .liner__acts{flex-wrap:wrap;gap:12px}
+  .specs{grid-template-columns:1fr}
+  .spec__n{width:50%}
+  .counters{grid-template-columns:1fr}
+  .podium{gap:8px}
+  .pod{padding:12px 6px}
+  .pod__b .bottle{height:110px}
+  .cellar__grid{grid-template-columns:repeat(2,1fr)}
+  .cellar__tabs{flex-wrap:wrap}
+  .cellar__tab{flex:1 0 45%}
+  .ftr__in{grid-template-columns:1fr}
+  .ftr__bottom-in{flex-direction:column;align-items:flex-start}
+  .ftr__soc{flex-wrap:wrap}
+  .tp{width:100%}
+  html[data-tp="on"] body{margin-right:0}
+  .hdr__act{gap:6px}
+  .hdr__act .btn{padding:10px 12px}
+  .hdr__act .btn--secondary{display:none}
+  .maker{flex-wrap:wrap;gap:12px}
+  .maker__txt{flex:1 0 60%}
+  .buy__card{padding:16px}
+  .wdg{padding:16px}
+  .tp-btn{right:12px;bottom:12px;padding:8px 14px;font-size:13px}
+  .nutri{flex-wrap:wrap}
+  .strow{flex-wrap:wrap}
+  .worldmap__t h1{font-size:24px}
+  .cats{grid-template-columns:repeat(2,1fr)}
+  .modal__win{padding:16px;top:8px}
+}
+.side-btn{display:none;align-items:center;gap:8px}
+html:not([data-page="travels"]) .side-btn{display:none!important}
+.map-card__img{width:100%!important;height:auto;max-width:1000px}
+.js-mapstats{grid-template-columns:minmax(0,1fr)!important;max-width:640px}
+
+</style>
 </head>
-<body><a href="product.html">Карточка товара</a></body>
+<body>
+<div data-layout="header"></div>
+
+<section class="page" id="page-product">
+<main class="wrap">
+
+  <!-- ================= Экран 1: Intro ================= -->
+  <section class="card sect">
+    <div class="liner">
+      <nav class="crumbs">
+        <a href="#">КуулКлевер</a><span>/</span><a href="#">…</a><span>/</span>
+        <span class="mut">Вино Мерум Приорати Иниси, 2021 750 мл</span>
+      </nav>
+      <div class="liner__acts">
+        <button><i data-lucide="share-2" class="i18"></i>Поделиться</button>
+        <button class="pink fw5"><i data-lucide="heart" class="i18" fill="currentColor"></i>Хочу попробовать (3&nbsp;467)</button>
+        <button><i data-lucide="check-circle-2" class="i18"></i>Уже попробовал (3&nbsp;467)</button>
+      </div>
+    </div>
+
+    <div class="pdp">
+      <!-- фото -->
+      <div class="gal">
+        <div class="gal__main">
+          <div class="medal medal--1">SOMELIE<br>COLLECTION<br>GRAND PRIX</div>
+          <div class="medal medal--2"><span><b>93</b>SOMELIE<br>GRAND PRIX</span></div>
+          <span class="gal__tag">Хит</span>
+          <span data-bottle="#5a0f1c"></span>
+        </div>
+        <div class="gal__thumbs">
+          <span class="thumb is-on" data-bottle="#5a0f1c" data-bottle-class="thumb-b" style="padding:6px"></span>
+          <span class="thumb ph"></span>
+          <span class="thumb ph ph--vine"></span>
+          <span class="thumb ph"></span>
+          <span class="thumb ph ph--vine"></span>
+        </div>
+      </div>
+
+      <!-- основная информация -->
+      <div class="info">
+        <div class="info__head">
+          <div class="info__sub">Merum Priorati Inici</div>
+          <h1 class="h2">Вино Мерум Приорати Иниси, 2021 <span class="mut3">750 мл</span></h1>
+          <div class="tags">
+            <span class="flag">🇪🇸</span><span>Испания</span><i></i>
+            <span>Приорат</span><i></i><span>Красное</span><i></i><span>Сухое</span><i></i><span>15%</span>
+          </div>
+          <a class="lnk" href="#chars">Все характеристики</a>
+        </div>
+
+        <div class="js-millesime">
+          <div class="lbl">Выбрать год <i data-lucide="help-circle" class="i16 mut3"></i></div>
+          <div class="years">
+            <span class="year is-on">2021</span><span class="year">2022</span>
+            <span class="year">2023</span><span class="year">2024</span><span class="year is-off">2025</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="quote">«Купаж из небольшой каталонской микрозоны, славящейся одним из лучших на планете
+            терруаров»</p>
+          <a class="lnk" href="#chars" style="margin-top:8px">Подробнее</a>
+        </div>
+
+        <div>
+          <div class="rates js-ratings">
+            <div>
+              <div class="rate__top">4,6 <i data-lucide="star" class="i18" fill="#F8A42A" stroke="#F8A42A"></i> КуулКлевер</div>
+              <a class="lnk mut" href="#" style="margin-top:4px">2 874 отзыва</a>
+            </div>
+            <div class="js-rate-ext">
+              <div class="rate__top">4,3 <i data-lucide="star" class="i18" fill="#C6026C" stroke="#C6026C"></i> VIVINO</div>
+              <div class="rate__sub">10 534 отзывов</div>
+            </div>
+          </div>
+
+          <div class="awards js-awards" style="margin-top:24px">
+            <div class="award">
+              <span class="award__n award__n--gold">93</span>
+              <span class="award__txt"><span class="row"><b class="fw5">Somelie</b>
+                <i data-lucide="help-circle" class="i16 mut3"></i></span>
+                <span class="rate__sub">Grand Prix</span></span>
+            </div>
+            <div class="award">
+              <span class="award__n">91</span>
+              <span class="award__txt"><span class="row"><b class="fw5">Parker ’24</b>
+                <i data-lucide="help-circle" class="i16 mut3"></i></span>
+                <span class="rate__sub">Превосходное</span></span>
+            </div>
+          </div>
+          <a class="lnk js-awards" href="#" style="margin-top:16px">Все награды</a>
+        </div>
+      </div>
+
+      <!-- покупка -->
+      <div class="buy">
+        <div class="buy__card">
+          <div class="buy__price"><span class="p14 mut1">Цена за 1 шт</span>
+            <span class="row" style="gap:8px">
+              <span class="price-old js-promo js-promo-disc">5 250,00 ₽</span>
+              <span class="price-badge js-promo js-promo-disc">−20%</span>
+              <b>4 200,00 ₽</b></span></div>
+          <div class="p14 js-promo js-promo-loy" style="margin-top:8px;color:var(--primary-dark)">
+            Цена по карте лояльности · без карты 5 250,00 ₽</div>
+          <div class="kegli">
+            <span class="row" style="gap:4px">КеГЛи за 1 шт <i data-lucide="info" class="i16"></i></span>
+            <span class="kegli__v"><i data-lucide="sun" class="i16" style="color:var(--secondary)"></i>97
+              <span class="chip" style="background:var(--primary)">КгЛ</span></span>
+          </div>
+          <div class="lbl js-kegli-link" style="margin-top:16px">Обменять за КеГЛи <i data-lucide="help-circle" class="i16 mut3"></i></div>
+          <div class="buy__acts">
+            <button class="btn btn--somelie btn--lg"><i data-lucide="shopping-cart"></i>Добавить</button>
+            <button class="buy__fav"><i data-lucide="bookmark"></i></button>
+          </div>
+        </div>
+        <div class="stock js-instock">
+          <i data-lucide="zap" class="i20" style="color:var(--secondary)"></i>
+          <span>В наличии сегодня</span><a class="lnk lnk--pink" href="#">в 17 магазинах</a>
+        </div>
+        <div class="stock js-lowstock">
+          <i data-lucide="alert-triangle" class="i20" style="color:var(--accent)"></i>
+          <span>Осталось 3 шт</span><a class="lnk lnk--pink" href="#">в 2 магазинах</a>
+        </div>
+        <div class="stock js-outstock">
+          <i data-lucide="bell" class="i20 mut1"></i>
+          <span class="mut1">Нет в наличии</span><a class="lnk" href="#">Сообщить о поступлении</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= Экран 2: Характеристики ================= -->
+  <section class="card sect" id="chars">
+    <div class="chars">
+      <div>
+        <div class="blk js-somelie">
+          <h2 class="blk__t pink"><span class="dot-ico"><i data-lucide="grape" class="i20"></i></span>
+            Почему напиток в Коллекциях СОМЕЛЬЕ?</h2>
+          <p>Мы сделали вина великого Приората по-настоящему доступными! Впервые в России — купаж из небольшой
+            каталонской микрозоны, славящейся одним из лучших на планете терруаров. «Иниси» переводится как
+            «начало» — это первое знакомство с регионом, очаровывающее своим стилем, строгим балансом между
+            благородной свежестью и ожидаемой плотностью премиального красного вина. В бокале вы найдёте не…
+            <a class="lnk" href="#">Ещё</a></p>
+          <div class="links-row">
+            <span class="mut1">Статьи на темы:</span>
+            <a class="lnk lnk--pink" href="#">Испания</a>
+            <a class="lnk lnk--pink" href="#">Приорат</a>
+            <a class="lnk lnk--pink" href="#">Красное насыщенное комплексное</a>
+          </div>
+        </div>
+
+        <div class="blk">
+          <h2 class="blk__t">Чистый состав</h2>
+          <p>Вода, ячменный солод, хмель</p>
+        </div>
+
+        <div class="blk js-maker">
+          <div class="maker">
+            <span class="maker__img ph ph--vine"></span>
+            <span class="maker__txt">
+              <span class="p14 mut1">Производитель</span>
+              <b class="h3" style="display:block">Мерум Приорати</b>
+              <span class="p14 mut">Campbell Davis, владелец винодельни</span>
+            </span>
+            <a class="btn" href="#">Подробнее</a>
+          </div>
+        </div>
+
+        <div class="blk">
+          <h2 class="blk__t">Вино Мерум Приорати Иниси</h2>
+          <div class="specs">
+            <div>
+              <div class="spec"><span class="spec__n">Страна</span><span class="spec__v">🇪🇸 Испания</span></div>
+              <div class="spec"><span class="spec__n">Регион</span><span class="spec__v">Каталония</span></div>
+              <div class="spec"><span class="spec__n">Апелласьон</span><span class="spec__v">Приорат</span></div>
+              <div class="spec"><span class="spec__n">Категория</span><span class="spec__v">DOC/DOQ</span></div>
+              <div class="spec"><span class="spec__n">Сорта винограда</span>
+                <span class="spec__v">Гарнача,<br>Каберне Совиньон,<br>Кариньян</span></div>
+              <div class="spec"><span class="spec__n">Год урожая</span><span class="spec__v spec__v--plain">2021</span></div>
+              <div class="spec" style="border-bottom:0"><span class="spec__n">Производитель</span>
+                <span class="spec__v">Мерум Приорати</span></div>
+            </div>
+            <div>
+              <div class="spec"><span class="spec__n">Тип вина</span><span class="spec__v">Тихое вино</span></div>
+              <div class="spec"><span class="spec__n">Цвет вина</span><span class="spec__v">Красное</span></div>
+              <div class="spec"><span class="spec__n">Содержание сахара</span><span class="spec__v">Сухое</span></div>
+              <div class="spec"><span class="spec__n">Алкоголь</span><span class="spec__v spec__v--plain">10%</span></div>
+              <div class="spec"><span class="spec__n">Объём</span><span class="spec__v spec__v--plain">750 мл</span></div>
+              <div class="spec"><span class="spec__n">Выдержка</span><span class="spec__v spec__v--plain">18 месяцев</span></div>
+              <div class="spec" style="border-bottom:0"><span class="spec__n">Стиль вина</span>
+                <span class="spec__v">Красное насыщенное<br>комплексное</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="blk js-nutri">
+          <h2 class="blk__t">Пищевая и энергетическая ценность</h2>
+          <div class="nutri">
+            <span class="nutri__i"><b>0.3 г</b><span>Углеводы</span></span><span class="vr"></span>
+            <span class="nutri__i"><b>85</b><span>кКал</span></span><span class="vr"></span>
+            <span class="nutri__i"><b>879.2</b><span>кДж</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- правая колонка -->
+      <aside>
+        <!-- точка входа в «Мои винные путешествия» -->
+        <a class="wdg wdg--link" href="#travels">
+          <div class="country">
+            <span class="country__img ph ph--vine"><span class="country__flag">🇪🇸</span></span>
+            <span class="country__txt"><b>Испания</b><span>Каталония</span></span>
+            <span class="ring" style="--v:16"><span class="ring__in"><b>16%</b><span>2/12</span></span></span>
+          </div>
+          <hr class="sep" style="margin:16px 0">
+          <div class="trip">
+            <span class="trip__t">
+              <b>Мои винные путешествия</b>
+              <span>Открыть статистику <i data-lucide="arrow-up-right" class="i16"></i></span>
+            </span>
+            <span class="spark">
+              <i style="height:56px"></i><i style="height:26px;background:#C9D6E8"></i>
+              <i style="height:40px"></i><i style="height:14px;background:#C9D6E8"></i>
+              <i style="height:30px"></i><i style="height:44px;background:#C9D6E8"></i>
+            </span>
+          </div>
+          <hr class="sep" style="margin:0 0 16px">
+          <p class="mut1">Продолжайте открывать,<br>вы только в самом начале</p>
+        </a>
+
+        <div class="wdg js-guest">
+          <b class="h4">Мои винные путешествия</b>
+          <p class="p14 mut1" style="margin:8px 0 16px">Войдите, чтобы отмечать открытые регионы,
+            вести погреб и получать рекомендации сомелье</p>
+          <button class="btn btn--somelie" style="width:100%">Войти</button>
+        </div>
+
+        <!-- хранение и характеристики напитка -->
+        <div class="wdg store js-store">
+          <div class="row" style="justify-content:center"><b class="h4">Хранить</b>
+            <i data-lucide="help-circle" class="i16 mut3"></i></div>
+          <div class="store__ico">
+            <span class="store__i is-on"><i data-lucide="barrel" class="i44"></i></span>
+            <span class="vr" style="height:28px"></span>
+            <span class="store__i"><i data-lucide="wine" class="i44"></i></span>
+            <span class="vr" style="height:28px"></span>
+            <span class="store__i"><i data-lucide="martini" class="i44"></i></span>
+          </div>
+          <div class="temp"><span class="p14 mut">Температура подачи</span><b>18°C – 20°C</b></div>
+          <div>
+            <svg class="glass" viewBox="0 0 80 120" fill="none" stroke="#B9B9B9" stroke-width="1.4">
+              <path d="M22 6h36c0 22-6 30-14 34v52h10v4H26v-4h10V40C28 36 22 28 22 6Z"/>
+            </svg>
+            <b class="fw5">Бокал для красного вина</b>
+            <p class="p14 mut3" style="margin-top:8px">Рекомендуется декантировать<br>за 2 часа до подачи</p>
+          </div>
+          <div class="tastes">
+            <div><b>Цвет</b><p>Насыщенный красно-вишнёвый</p></div>
+            <div><b>Аромат</b><p>Щедрые ноты красных ягод (малины, красной смородины) приправлены нюансами аниса</p></div>
+            <div><b>Вкус</b><p>Свежий, хорошо сбалансированный, с мягкими танинами, тонами красных фруктов,
+              оттенками ванили, тонкими штрихами дуба и долгим элегантным послевкусием</p></div>
+            <div><b>Тип производства вина</b><p>Выдерживается в течение 12 месяцев в бочках из французского дуба,
+              затем 6 месяцев в бутылке</p></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+</main>
+</section>
+
+<section class="page" id="page-travels">
+<div class="wrap layout">
+  <!-- ============ сайдбар личного кабинета ============ -->
+  <aside class="side">
+    <div class="side__me">
+      <div class="side__me-t">Мой КуулКлевер <i data-lucide="chevron-right" class="i20 mut3"></i></div>
+      <div class="side__me-u"><span class="logo" style="width:24px;height:24px;font-size:12px">🍀</span>
+        Константин Константинов</div>
+    </div>
+    <nav>
+      <div class="side__group">
+        <div class="side__h">Персонализация</div>
+        <a class="nav" href="#"><i data-lucide="user-plus" class="i20"></i>Пригласи друга</a>
+        <a class="nav" href="#"><i data-lucide="briefcase" class="i20"></i>Рекомендуйте работу в КуулКлевер</a>
+        <a class="nav" href="#"><i data-lucide="coins" class="i20"></i>Мои КеГЛи</a>
+        <a class="nav" href="#"><i data-lucide="credit-card" class="i20"></i>Мои карты</a>
+        <a class="nav" href="#"><i data-lucide="heart" class="i20"></i>Избранное</a>
+        <a class="nav" href="#"><i data-lucide="sun" class="i20"></i>ЛУЧ</a>
+        <a class="nav is-on" href="#travels"><i data-lucide="book-open" class="i20"></i>Мои винные путешествия</a>
+      </div>
+      <div class="side__group">
+        <div class="side__h">Покупки и заказы</div>
+        <a class="nav" href="#"><i data-lucide="shopping-bag" class="i20"></i>Мои заказы</a>
+        <a class="nav" href="#"><i data-lucide="receipt" class="i20"></i>История покупок</a>
+        <a class="nav" href="#"><i data-lucide="clock" class="i20"></i>Рейтинг покупок</a>
+      </div>
+      <div class="side__group">
+        <div class="side__h">Настройки</div>
+        <a class="nav" href="#"><i data-lucide="user-circle" class="i20"></i>Мои профиль</a>
+        <a class="nav" href="#"><i data-lucide="wallet" class="i20"></i>Способы оплаты</a>
+        <a class="nav" href="#"><i data-lucide="map-pin" class="i20"></i>Мои адреса</a>
+        <a class="nav" href="#"><i data-lucide="bell" class="i20"></i>Настройка уведомлений</a>
+        <a class="nav" href="#"><i data-lucide="settings" class="i20"></i>Настройки</a>
+      </div>
+      <div class="side__group">
+        <div class="side__h">Поддержка</div>
+        <a class="nav" href="#"><i data-lucide="store" class="i20"></i>Магазины</a>
+        <a class="nav" href="#"><i data-lucide="info" class="i20"></i>О КуулКлевер</a>
+        <a class="nav" href="#"><i data-lucide="percent" class="i20"></i>О программе лояльности</a>
+        <a class="nav" href="#"><i data-lucide="help-circle" class="i20"></i>Правила онлайн-заказа</a>
+        <a class="nav" href="#"><i data-lucide="scale" class="i20"></i>Правовая информация</a>
+        <a class="nav" href="#"><i data-lucide="edit-3" class="i20"></i>Обратная связь</a>
+      </div>
+      <a class="nav nav--exit" href="#"><i data-lucide="log-out" class="i20"></i>Выйти</a>
+    </nav>
+  </aside>
+
+  <!-- ============ контент ============ -->
+  <main class="body-col">
+    <div class="row" style="justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <h1 class="h1">Мои винные путешествия</h1>
+      <button class="lnk js-share"><i data-lucide="share-2" class="i18"></i>Поделиться достижениями</button>
+    </div>
+
+    <div class="js-empty">
+      <i data-lucide="compass" style="width:56px;height:56px;color:var(--sub3)"></i>
+      <b>Путешествие ещё не началось</b>
+      <p class="mut1">Купите первую бутылку — регион на карте откроется автоматически</p>
+      <a class="btn btn--somelie" href="#product" style="margin-top:24px">В каталог вина</a>
+    </div>
+
+    <section class="two js-has-data">
+      <div class="js-podium">
+        <h2 class="sec__t">По количеству покупок</h2>
+        <div class="podium">
+          <div class="pod pod--2">
+            <span class="pod__m">2</span>
+            <span class="pod__b" data-bottle="#4a1420"></span>
+            <span class="pod__n">Casali del Barone Barbera</span>
+          </div>
+          <div class="pod pod--1">
+            <span class="pod__m">1</span>
+            <span class="pod__b" data-bottle="#5a0f1c"></span>
+            <span class="pod__n">Chateau Bellevue Saint-Georges</span>
+          </div>
+          <div class="pod pod--3">
+            <span class="pod__m">3</span>
+            <span class="pod__b" data-bottle="#cdbf7a"></span>
+            <span class="pod__n">Soave Classico Corte Olivi</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="js-spend">
+        <h2 class="sec__t">По стоимости</h2>
+        <div class="bars">
+          <div class="bar"><span class="bar__n">до 1000 ₽</span><span class="bar__t"><span class="bar__v" style="width:7%"></span></span></div>
+          <div class="bar"><span class="bar__n">&gt; 1000 ₽</span><span class="bar__t"><span class="bar__v" style="width:40%"></span></span></div>
+          <div class="bar"><span class="bar__n">&gt; 1500 ₽</span><span class="bar__t"><span class="bar__v" style="width:33%"></span></span></div>
+          <div class="bar"><span class="bar__n">&gt; 2000 ₽</span><span class="bar__t"><span class="bar__v" style="width:11%"></span></span></div>
+          <div class="bar"><span class="bar__n">&gt; 3000 ₽</span><span class="bar__t"><span class="bar__v" style="width:5%"></span></span></div>
+          <div class="bar"><span class="bar__n">&gt; 5000 ₽</span><span class="bar__t"><span class="bar__v" style="width:1%"></span></span></div>
+          <div class="bar"><span class="bar__n">&gt; 10 000 ₽</span><span class="bar__t"><span class="bar__v" style="width:1%"></span></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="counters js-has-data">
+      <a class="cnt cnt--geo" href="#map">
+        <span><b class="js-p-countries">8 стран</b><span class="js-p-regions">12 регионов</span></span>
+        <span class="cnt__r">География<br>путешествий</span>
+      </a>
+      <a class="cnt" href="#"><i data-lucide="external-link" class="i20 cnt__ext"></i>
+        <b class="js-p-cellar">134</b><span>Напитки в погребе</span></a>
+      <a class="cnt js-ratecnt" href="#"><i data-lucide="external-link" class="i20 cnt__ext"></i>
+        <b class="js-p-rates">68</b><span>Мои оценки</span></a>
+    </section>
+
+    <!-- ============ точка входа в карту ============ -->
+    <section class="geo js-has-data">
+      <div>
+        <h2 class="sec__t">География винных путешествий</h2>
+        <div class="map-card">
+          <span data-worldmap='{"w":463,"cell":13,"gap":2}'></span>
+          <b class="h4 js-p-pct" style="font-weight:400">23% стран открыто</b>
+          <a class="btn btn--dark" href="#map">Развернуть карту
+            <i data-lucide="maximize-2" class="i16"></i></a>
+        </div>
+      </div>
+
+      <div>
+        <div class="stat-list" style="margin-bottom:48px">
+          <div class="stat-h">
+            <span class="stat-h__l">Регионы <span class="chip">ТОП-5</span></span>
+            <span class="stat-h__r">Открыто напитков</span>
+          </div>
+          <div class="strow"><span class="flag">🇫🇷</span><span class="strow__n">Прованс</span>
+            <span class="strow__v"></span><span>35% <span class="mut3">(23/98)</span></span></div>
+          <div class="strow"><span class="flag">🇦🇷</span><span class="strow__n">Мендоса</span>
+            <span class="strow__v"></span><span>25% <span class="mut3">(23/78)</span></span></div>
+          <div class="strow"><span class="flag">🇪🇸</span><span class="strow__n">Валенсия</span>
+            <span class="strow__v"></span><span>25% <span class="mut3">(35/98)</span></span></div>
+          <div class="strow"><span class="flag">🇮🇹</span><span class="strow__n">Сицилия</span>
+            <span class="strow__v"></span><span>15% <span class="mut3">(13/67)</span></span></div>
+          <div class="strow"><span class="flag">🇮🇹</span><span class="strow__n">Тоскана</span>
+            <span class="strow__v"></span><span>25% <span class="mut3">(45/130)</span></span></div>
+        </div>
+
+        <div class="stat-list">
+          <div class="stat-h">
+            <span class="stat-h__l">Страны <span class="chip">ТОП-5</span></span>
+            <span class="stat-h__r">Открыто регионов</span>
+          </div>
+          <div class="strow"><span class="flag">🇪🇸</span><span class="strow__n">Испания</span>
+            <span class="strow__v">65% <span class="mut3">(20/34)</span></span>
+            <span class="pips"><i></i><i></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div>
+          <div class="strow"><span class="flag">🇮🇹</span><span class="strow__n">Италия</span>
+            <span class="strow__v">45% <span class="mut3">(12/34)</span></span>
+            <span class="pips"><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div>
+          <div class="strow"><span class="flag">🇫🇷</span><span class="strow__n">Франция</span>
+            <span class="strow__v">30% <span class="mut3">(30/90)</span></span>
+            <span class="pips"><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div>
+          <div class="strow"><span class="flag">🇵🇹</span><span class="strow__n">Португалия</span>
+            <span class="strow__v">25% <span class="mut3">(23/98)</span></span>
+            <span class="pips"><i></i><i></i><i></i><i class="on"></i><i class="on"></i></span></div>
+          <div class="strow"><span class="flag">🇩🇪</span><span class="strow__n">Германия</span>
+            <span class="strow__v">25% <span class="mut3">(23/98)</span></span>
+            <span class="mut3 p14">Нет регионов</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+</section>
+
+<section class="page" id="page-map">
+<main class="wrap mappage">
+  <section class="worldmap">
+    <div class="worldmap__t">
+      <h1>География винных путешествий</h1>
+      <div class="row"><span class="flag">🇪🇸</span><span class="fw5">Испания</span></div>
+    </div>
+
+    <div style="position:relative">
+      <span data-worldmap='{"w":1000,"cell":24,"gap":4}'></span>
+      <span class="ring" style="--v:16;position:absolute;top:0;right:0">
+        <span class="ring__in"><b>16%</b><span>2/12</span></span></span>
+      <span class="tip">
+        <span class="tip__img ph ph--vine"></span>
+        <span><b>Каталония</b><span>Испания</span></span>
+        <span class="tip__v">24%</span>
+      </span>
+    </div>
+
+    <!-- сводка -->
+    <div class="geo js-mapstats" style="margin-top:32px;gap:24px">
+      <div class="pane js-gran-r" style="padding:24px">
+        <div class="stat-h" style="margin-bottom:16px">
+          <span class="stat-h__l h4">Регионы <span class="chip">ТОП-5</span></span>
+          <span class="stat-h__r">Открыто напитков</span>
+        </div>
+        <div class="strow p14"><span class="flag">🇫🇷</span><span class="strow__n">Прованс</span>
+          <span class="strow__v"></span><span>35% <span class="mut3">(23/98)</span></span></div>
+        <div class="strow p14"><span class="flag">🇦🇷</span><span class="strow__n">Мендоса</span>
+          <span class="strow__v"></span><span>25% <span class="mut3">(23/78)</span></span></div>
+        <div class="strow p14"><span class="flag">🇪🇸</span><span class="strow__n">Валенсия</span>
+          <span class="strow__v"></span><span>25% <span class="mut3">(35/98)</span></span></div>
+        <div class="strow p14"><span class="flag">🇮🇹</span><span class="strow__n">Сицилия</span>
+          <span class="strow__v"></span><span>15% <span class="mut3">(13/67)</span></span></div>
+        <div class="strow p14"><span class="flag">🇮🇹</span><span class="strow__n">Тоскана</span>
+          <span class="strow__v"></span><span>25% <span class="mut3">(45/130)</span></span></div>
+      </div>
+
+      <div class="pane js-gran-c" style="padding:24px">
+        <div class="stat-h" style="margin-bottom:16px">
+          <span class="stat-h__l h4">Страны <span class="chip">ТОП-5</span></span>
+          <span class="stat-h__r">Открыто регионов</span>
+        </div>
+        <div class="strow p14"><span class="flag">🇪🇸</span><span class="strow__n">Испания</span>
+          <span class="strow__v">65% <span class="mut3">(20/34)</span></span>
+          <span class="pips"><i></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div>
+        <div class="strow p14"><span class="flag">🇮🇹</span><span class="strow__n">Италия</span>
+          <span class="strow__v">45% <span class="mut3">(12/34)</span></span>
+          <span class="pips"><i></i><i></i><i></i><i class="on"></i><i class="on"></i></span></div>
+        <div class="strow p14"><span class="flag">🇫🇷</span><span class="strow__n">Франция</span>
+          <span class="strow__v">30% <span class="mut3">(30/90)</span></span>
+          <span class="pips"><i></i><i></i><i></i><i class="on"></i><i class="on"></i></span></div>
+        <div class="strow p14"><span class="flag">🇵🇹</span><span class="strow__n">Португалия</span>
+          <span class="strow__v">25% <span class="mut3">(23/98)</span></span>
+          <span class="pips"><i></i><i></i><i></i><i class="on"></i></span></div>
+        <div class="strow p14"><span class="flag">🇩🇪</span><span class="strow__n">Германия</span>
+          <span class="strow__v">25% <span class="mut3">(23/98)</span></span>
+          <span class="mut3">Нет регионов</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- правая панель -->
+  <aside>
+    <div class="tabs">
+      <span class="tab is-on">Топ напитков</span><span class="tab">Отзывы</span>
+    </div>
+    <div class="pane" style="padding:0 16px">
+      <div class="wine"><span class="wine__b" data-bottle="#5a0f1c"></span>
+        <span><span class="wine__t">Вино игристое выдержанное ЭМЕРИ КРЕМАН ДЕ ЛИМУ</span>
+          <span class="wine__s">Розовое, Брют, Испания</span>
+          <span class="wine__r"><i data-lucide="star" class="i16" fill="#F8A42A" stroke="#F8A42A"></i>
+            <b>5,0</b> <span class="mut3">98 оценок</span></span></span></div>
+      <div class="wine"><span class="wine__b" data-bottle="#4a1420"></span>
+        <span><span class="wine__t">Вино игристое выдержанное ЭМЕРИ КРЕМАН ДЕ ЛИМУ</span>
+          <span class="wine__s">Розовое, Брют, Испания</span>
+          <span class="wine__r"><i data-lucide="star" class="i16" fill="#F8A42A" stroke="#F8A42A"></i>
+            <b>4,9</b> <span class="mut3">87 оценок</span></span></span></div>
+      <div class="wine"><span class="wine__b" data-bottle="#6b2231"></span>
+        <span><span class="wine__t">Вино игристое выдержанное ЭМЕРИ КРЕМАН ДЕ ЛИМУ</span>
+          <span class="wine__s">Розовое, Брют, Испания</span>
+          <span class="wine__r"><i data-lucide="star" class="i16" fill="#F8A42A" stroke="#F8A42A"></i>
+            <b>4,9</b> <span class="mut3">87 оценок</span></span></span></div>
+      <div class="wine" style="border-bottom:0"><span class="wine__b" data-bottle="#cdbf7a"></span>
+        <span><span class="wine__t">Вино игристое выдержанное ЭМЕРИ КРЕМАН ДЕ ЛИМУ</span>
+          <span class="wine__s">Розовое, Брют, Испания</span>
+          <span class="wine__r"><i data-lucide="star" class="i16" fill="#F8A42A" stroke="#F8A42A"></i>
+            <b>4,9</b> <span class="mut3">87 оценок</span></span></span></div>
+      <a class="btn btn--somelie js-mapcta" href="#product" style="width:100%;margin:16px 0">
+        Все вина из региона <i data-lucide="arrow-right" class="i20"></i></a>
+    </div>
+
+    <div class="counters" style="grid-template-columns:1fr;margin-top:16px">
+      <a class="cnt" href="#"><i data-lucide="external-link" class="i20 cnt__ext"></i>
+        <b class="js-p-cellar">134</b><span>Напитки в погребе</span></a>
+      <a class="cnt js-ratecnt" href="#"><i data-lucide="external-link" class="i20 cnt__ext"></i>
+        <b class="js-p-rates">68</b><span>Мои оценки</span></a>
+    </div>
+  </aside>
+</main>
+
+<!-- ============ мой винный погреб ============ -->
+<div class="wrap">
+  <section class="cellar js-cellar">
+    <div class="cellar__h"><span></span>
+      <span class="row">🍷 Мой винный погреб</span>
+      <i data-lucide="arrow-right" class="i20"></i></div>
+    <div class="cellar__tabs">
+      <span class="cellar__tab is-on"><i data-lucide="archive" class="i16"></i>Купил, храню</span>
+      <span class="cellar__tab"><i data-lucide="check" class="i16"></i>Попробовал</span>
+      <span class="cellar__tab"><i data-lucide="edit-3" class="i16"></i>Мои заметки</span>
+      <span class="cellar__tab"><i data-lucide="heart" class="i16"></i>Хочу попробовать</span>
+      <span class="cellar__tab"><i data-lucide="map-pin" class="i16"></i>Все вина региона</span>
+    </div>
+    <div class="cellar__grid">
+      <a class="cellar__i" href="#product"><span class="stars">★★★★★</span>
+        <span data-bottle="#5a0f1c"></span><small>Merum Priorati Inici, 2021</small></a>
+      <a class="cellar__i" href="#product"><span class="stars">★★★★★</span>
+        <span data-bottle="#5a0f1c"></span><small>Merum Priorati Inici, 2021</small></a>
+      <a class="cellar__i" href="#product"><span class="stars">★★★★★</span>
+        <span data-bottle="#5a0f1c"></span><small>Merum Priorati Inici, 2021</small></a>
+      <a class="cellar__i" href="#product"><span class="stars">★★★★★</span>
+        <span data-bottle="#5a0f1c"></span><small>Merum Priorati Inici, 2021</small></a>
+      <a class="cellar__i" href="#product"><span class="stars">★★★★★</span>
+        <span data-bottle="#5a0f1c"></span><small>Merum Priorati Inici, 2021</small></a>
+      <a class="cellar__i" href="#product"><span class="stars">★★★★★</span>
+        <span data-bottle="#5a0f1c"></span><small>Merum Priorati Inici, 2021</small></a>
+    </div>
+  </section>
+
+  <p class="disclaimer">Розничная продажа осуществляется на основании
+    <a class="lnk" href="#">лицензии на розничную продажу алкогольной продукции</a>.
+    Доставка алкогольной продукции не осуществляется соответственно запрету на дистанционную продажу,
+    установленному Федеральным законом от 22 ноября 1995 г. № 171-ФЗ.
+    Информация на сайте не является публичной офертой. Обращаем внимание на то, что данный интернет-сайт,
+    а также вся информация о товарах и ценах, представленная на нём, носит исключительно информационный
+    характер и ни при каких условиях не является публичной офертой, определяемой положениями статьи 437
+    Гражданского кодекса Российской Федерации.</p>
+</div>
+</section>
+
+<div data-layout="footer"></div>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>
+/* Общие компоненты макета: шапка и подвал.
+   Подключаются строкой <div data-layout="header"></div> и работают с file:// */
+
+const HEADER = `
+<header class="hdr">
+  <div class="hdr__in">
+    <div class="hdr__top">
+      <div class="hdr__deliv">
+        <i data-lucide="map-pin" class="i16" style="color:var(--express)"></i>
+        <span class="fw5" style="color:var(--express)">Доставка</span>
+        <span class="ellip">ул. Старых Производственников, 205</span>
+        <span class="vr"></span>
+        <span>Сегодня 14:00&nbsp;-&nbsp;16:00</span>
+      </div>
+      <nav class="hdr__links">
+        <a href="#">Магазины</a>
+        <a href="#">Вакансии</a>
+        <a href="#">Аренда</a>
+        <span class="vr"></span>
+        <a href="#" class="row">Н. Новгород <i data-lucide="chevron-down" class="i16"></i></a>
+      </nav>
+    </div>
+
+    <div class="hdr__act">
+      <button class="btn btn--icon side-btn" title="Меню"><i data-lucide="menu"></i></button>
+      <a class="logo" href="#product" title="На главную">🍀</a>
+      <button class="btn btn--somelie" id="catalogBtn"><i data-lucide="layout-grid"></i>Каталог</button>
+      <a class="btn btn--secondary" href="#"><i data-lucide="percent"></i>Акции</a>
+      <label class="search">
+        <i data-lucide="search" class="mut1"></i>
+        <input placeholder="Бальзамический уксус">
+      </label>
+      <button class="btn btn--icon"><i data-lucide="heart"></i><span class="badge">24</span></button>
+      <button class="btn"><i data-lucide="shopping-cart"></i>1 658 ₽<span class="badge">15</span></button>
+      <div class="udrop">
+        <button class="btn" id="userBtn"><i data-lucide="user"></i>Константин<span class="badge badge--dot"></span></button>
+        <div class="udrop__m">
+          <a class="udrop__i udrop__i--ctx" id="ctxItem" href="#travels"></a>
+          <hr class="sep" style="margin:8px 4px">
+          <a class="udrop__i" href="#travels"><i data-lucide="user-circle" class="i20"></i>Мой профиль</a>
+          <a class="udrop__i" href="#"><i data-lucide="shopping-bag" class="i20"></i>Мои заказы</a>
+          <a class="udrop__i" href="#"><i data-lucide="coins" class="i20"></i>Мои КеГЛи</a>
+          <a class="udrop__i" href="#"><i data-lucide="heart" class="i20"></i>Избранное</a>
+          <a class="udrop__i" href="#"><i data-lucide="settings" class="i20"></i>Настройки</a>
+          <hr class="sep" style="margin:8px 4px">
+          <a class="udrop__i nav--exit" href="#"><i data-lucide="log-out" class="i20"></i>Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>`;
+
+const F_COL2 = ['Каталог МясновЪ', 'Каталог Отдохни', 'Кухня Полли',
+  'Менеджер для частных и корпоративных клиентов', 'Магазины', 'Торты на заказ', 'Аренда',
+  'Акции и скидки', 'Личный кабинет', 'Доставка и самовывоз',
+  'Мобильное приложение КуулКлевер', 'Карта сайта'];
+
+const F_COL3 = ['О КуулКлевер', 'КуулКлевер Лайф', 'КуулКлевер книга', 'Контакты', 'Вакансии',
+  'Правила онлайн-заказа', 'Правила программы лояльности',
+  'Политика обработки персональных данных', 'Правила отбора контрагентов', 'Лицензия'];
+
+const SOCIALS = [
+  ['🍀', 'КуулКлевер'],
+  ['🍷', 'Сомелье'],
+  ['🥘', 'Кухня Полли'],
+];
+
+const li = (arr) => arr.map(t => `<li><a href="#">${t}</a></li>`).join('');
+
+const FOOTER = `
+<footer class="ftr">
+  <div class="ftr__in">
+    <div>
+      <div class="row"><span class="logo">🍀</span><b>КуулКлевер</b></div>
+      <div class="ftr__phone">8 831 461-91-91</div>
+      <p class="p14 mut1">Поддержка клиентов с 08:00 до 22:00 ежедневно</p>
+      <p class="p14 mut1" style="margin-top:8px">Доставка продуктов на дом в Москве, Нижнем Новгороде и области</p>
+    </div>
+    <ul>${li(F_COL2)}</ul>
+    <ul>${li(F_COL3)}</ul>
+    <div>
+      <h4>Скачайте приложение</h4>
+      <p class="p14 mut1">Будь в курсе наших новинок, акций и следи за программой лояльности</p>
+      <div class="ftr__stores">
+        <span class="ftr__store"><i data-lucide="apple" class="i18"></i>App&nbsp;Store</span>
+        <span class="ftr__store"><i data-lucide="play" class="i18"></i>Google&nbsp;Play</span>
+        <span class="ftr__store"><i data-lucide="smartphone" class="i18"></i>AppGallery</span>
+      </div>
+    </div>
+  </div>
+  <div class="ftr__bottom">
+    <div class="ftr__bottom-in">
+      <div class="ftr__soc">
+        ${SOCIALS.map(([e, n]) => `<span class="ftr__soc-g"><span>${e}</span><b>${n}</b>
+          <a href="#"><i data-lucide="send" class="i16"></i></a>
+          <a href="#"><i data-lucide="message-circle" class="i16"></i></a>
+          <a href="#"><i data-lucide="youtube" class="i16"></i></a></span>`).join('')}
+      </div>
+      <a href="#" class="row"><i data-lucide="message-square" class="i16"></i>Обратная связь</a>
+    </div>
+    <div class="ftr__bottom-in" style="border-top:1px solid var(--border)">
+      <span>©2026 КуулКлевер. Сделано с любовью к покупателям</span>
+      <a href="#" class="pink">Политика конфиденциальности</a>
+      <span>This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply</span>
+    </div>
+  </div>
+</footer>`;
+
+/* ---- бутылка-заглушка вместо фото-ассетов из Figma ---- */
+function bottle(cls = 'bottle', label = '#7a1220') {
+  return `<svg class="${cls}" viewBox="0 0 60 200" fill="none">
+    <path d="M25 4h10v42c0 8 12 18 12 34v108a8 8 0 0 1-8 8H21a8 8 0 0 1-8-8V80c0-16 12-26 12-34V4Z"
+          fill="${label}" stroke="rgba(0,0,0,.15)"/>
+    <rect x="24" y="0" width="12" height="10" rx="2" fill="#2b2b2b"/>
+    <rect x="14" y="104" width="32" height="52" rx="2" fill="#f4efe4"/>
+    <rect x="19" y="118" width="22" height="3" rx="1.5" fill="#b9a37a"/>
+    <rect x="21" y="127" width="18" height="2" rx="1" fill="#c9bda4"/>
+  </svg>`;
+}
+
+
+/* Стилизованная точечная карта мира.
+   Сетка 36x18 (шаг 10°), суша задана диапазонами колонок для каждой строки.
+   Ассеты карты из Figma недоступны из окружения, поэтому карта собирается кодом. */
+
+const LAND = {
+  1: [[5, 15], [20, 35]],
+  2: [[3, 15], [17, 35]],
+  3: [[3, 11], [17, 35]],
+  4: [[4, 11], [17, 35]],
+  5: [[6, 11], [17, 35]],
+  6: [[8, 11], [16, 32]],
+  7: [[9, 11], [16, 31]],
+  8: [[11, 13], [16, 23], [27, 31]],
+  9: [[12, 14], [16, 23], [28, 31]],
+  10: [[12, 15], [16, 23], [30, 33]],
+  11: [[13, 15], [17, 22], [29, 34]],
+  12: [[13, 15], [17, 21], [30, 34]],
+  13: [[13, 14], [32, 33]],
+};
+
+/* открытые страны — заливка брендовым цветом */
+const OPEN = new Set([
+  '5:5', '5:6', '5:7', '5:8', '5:9', '5:10', '6:6', '6:7', '6:8', '6:9', '6:10', '7:9', '7:10',
+  '3:3', '3:4', '4:4',
+  '4:18', '4:19', '5:17', '5:18', '5:19', '5:20', '6:17', '6:18', '6:19', '6:20',
+  '4:25', '4:26', '4:27', '4:28', '5:25', '5:26', '5:27',
+  '8:12', '8:13', '9:12', '11:19', '10:20',
+]);
+
+/* страны-производители, ещё не открытые */
+const SOON = new Set(['2:4', '2:5', '2:6', '2:7', '2:8', '3:5', '3:6', '3:7', '3:8', '3:9', '2:9', '2:10']);
+
+function worldMap({ w = 1000, cell = 26, gap = 4 } = {}) {
+  const size = cell - gap;
+  const rects = [];
+  for (const [rowStr, ranges] of Object.entries(LAND)) {
+    const row = +rowStr;
+    for (const [a, b] of ranges) {
+      for (let c = a; c <= b; c++) {
+        const key = row + ':' + c;
+        const fill = OPEN.has(key) ? 'var(--somelie)' : SOON.has(key) ? '#E2E8F8' : '#E3E4E4';
+        rects.push(`<rect x="${c * cell}" y="${row * cell}" width="${size}" height="${size}" rx="3" fill="${fill}"/>`);
+      }
+    }
+  }
+  return `<svg class="map-card__img" viewBox="0 ${cell} ${36 * cell} ${13 * cell}"
+    width="${w}" preserveAspectRatio="xMidYMid meet">${rects.join('')}</svg>`;
+}
+
+
+
+/* ================= режим тестировщика ================= */
+const TWEAKS = [
+  { for:'global', title:'Глобально', items:[
+    { id:'navmode', label:'Навигация каталог ↔ профиль', hint:'Четыре сценария рядом: от базового до идеи с двойным кликом.',
+      opts:[['explicit','Явный (реком.)'],['contextual','Контекстный'],['dblclick','Двойной клик'],['classic','Базовый']] },
+    { id:'auth', label:'Пользователь', hint:'Гостю не показываем персональные блоки — вопрос: что вообще видно до логина.',
+      opts:[['user','Авторизован'],['guest','Гость']] },
+  ]},
+  { for:'product', title:'Карточка товара · коммерция', items:[
+    { id:'stock', label:'Наличие', hint:'Меняет CTA и плашку под ценой.',
+      opts:[['in','Есть'],['low','Мало'],['out','Нет в наличии']] },
+    { id:'promo', label:'Ценовой сценарий', hint:'Скидка vs цена по карте лояльности — разная механика для маржи.',
+      opts:[['none','Обычная'],['discount','Скидка'],['loyalty','По карте']] },
+    { id:'kegli', label:'Блок КеГЛи', hint:'Показывать ли обмен баллов прямо в карточке.',
+      opts:[['on','Вкл'],['off','Выкл']] },
+    { id:'express', label:'Плашка «В наличии сегодня»', hint:'Драйвер конверсии в самовывоз.',
+      opts:[['on','Вкл'],['off','Выкл']] },
+  ]},
+  { for:'product', title:'Карточка товара · контент', items:[
+    { id:'millesime', label:'Выбор года (миллезим)', hint:'Требует связанных карточек по годам — дорого в контенте.',
+      opts:[['on','Вкл'],['off','Выкл']] },
+    { id:'ratings', label:'Рейтинги', hint:'Внешний рейтинг повышает доверие, но уводит на сторонний бренд.',
+      opts:[['full','Свой + Vivino'],['own','Только свой'],['off','Скрыть']] },
+    { id:'awards', label:'Награды и баллы', hint:'Somelie Grand Prix / Parker — контент требует ведения.',
+      opts:[['on','Вкл'],['off','Выкл']] },
+    { id:'somelie', label:'Экспертный текст Сомелье', hint:'Объём редакционного контента на SKU.',
+      opts:[['full','Полный'],['short','Свёрнутый'],['off','Скрыть']] },
+    { id:'maker', label:'Карточка производителя', hint:'Нужны фото и описания виноделен.',
+      opts:[['on','Вкл'],['off','Выкл']] },
+    { id:'store', label:'Блок «Хранить / подача»', hint:'Экспертный виджет — заполняется вручную.',
+      opts:[['on','Вкл'],['off','Выкл']] },
+    { id:'nutri', label:'Пищевая ценность', hint:'Для алкоголя не обязательна.',
+      opts:[['on','Вкл'],['off','Выкл']] },
+    { id:'gallery', label:'Галерея превью', hint:'Нужны доп. фото каждого SKU.',
+      opts:[['on','Вкл'],['off','Выкл']] },
+    { id:'trips', label:'Виджет «Винные путешествия»', hint:'Ключевая точка входа в геймификацию прямо из карточки.',
+      opts:[['on','Вкл'],['off','Выкл']] },
+  ]},
+  { for:'travels', title:'Путешествия · прогресс', items:[
+    { id:'progress', label:'Стадия пользователя', hint:'Как выглядит раздел на разном объёме истории покупок.',
+      opts:[['empty','Пусто'],['novice','Новичок'],['advanced','Опытный'],['expert','Эксперт']] },
+    { id:'podium', label:'ТОП-3 по покупкам', hint:'Подиум требует минимум 3 повторных покупки.',
+      opts:[['on','Вкл'],['off','Выкл']] },
+    { id:'spend', label:'Разбивка «По стоимости»', hint:'Показывать клиенту его траты — чувствительно.',
+      opts:[['on','Вкл'],['off','Выкл']] },
+    { id:'ratecnt', label:'Счётчик «Мои оценки»', hint:'Работает, только если есть механика оценок.',
+      opts:[['on','Вкл'],['off','Выкл']] },
+    { id:'share', label:'Поделиться достижениями', hint:'Виральность vs приватность покупок алкоголя.',
+      opts:[['on','Вкл'],['off','Выкл']] },
+  ]},
+  { for:'map', title:'Карта', items:[
+    { id:'granularity', label:'Детализация', hint:'Страны считать проще, регионы — точнее, но нужна разметка каталога.',
+      opts:[['countries','Страны'],['regions','Регионы']] },
+    { id:'tooltip', label:'Подсказка на карте', hint:'Ховер-карточка региона.',
+      opts:[['on','Вкл'],['off','Выкл']] },
+    { id:'mapcta', label:'CTA «Все вина из региона»', hint:'Основной путь из геймификации в покупку.',
+      opts:[['on','Вкл'],['off','Выкл']] },
+    { id:'cellar', label:'Блок «Мой винный погреб»', hint:'Требует учёта купленного и заметок.',
+      opts:[['on','Вкл'],['off','Выкл']] },
+    { id:'disclaimer', label:'Юридический дисклеймер', hint:'Обязателен на страницах с алкоголем.',
+      opts:[['on','Вкл'],['off','Выкл']] },
+  ]},
+];
+
+const D = document.documentElement;
+const store = {};
+
+const PROGRESS = {
+  empty:    { countries:'0 стран', regions:'0 регионов', cellar:'0',  rates:'0',  pct:'0% стран открыто',  ring:0,  rf:'0/12', note:'Начните с первой бутылки — путешествие откроется само' },
+  novice:   { countries:'2 страны', regions:'3 региона',  cellar:'11', rates:'4',  pct:'6% стран открыто',  ring:6,  rf:'1/12', note:'Продолжайте открывать, вы только в самом начале' },
+  advanced: { countries:'8 стран',  regions:'12 регионов',cellar:'134',rates:'68', pct:'23% стран открыто', ring:16, rf:'2/12', note:'Продолжайте открывать, вы только в самом начале' },
+  expert:   { countries:'21 страна',regions:'46 регионов',cellar:'512',rates:'301',pct:'61% стран открыто', ring:58, rf:'7/12', note:'Вы в топ-3% исследователей КуулКлевер' },
+};
+
+function applyProgress(v){
+  const p = PROGRESS[v]; if(!p) return;
+  document.querySelectorAll('.js-p-countries').forEach(e => e.textContent = p.countries);
+  document.querySelectorAll('.js-p-regions').forEach(e => e.textContent = p.regions);
+  document.querySelectorAll('.js-p-cellar').forEach(e => e.textContent = p.cellar);
+  document.querySelectorAll('.js-p-rates').forEach(e => e.textContent = p.rates);
+  document.querySelectorAll('.js-p-pct').forEach(e => e.textContent = p.pct);
+  document.querySelectorAll('.js-p-note').forEach(e => e.textContent = p.note);
+  document.querySelectorAll('.ring').forEach(e => {
+    e.style.setProperty('--v', p.ring);
+    e.querySelector('.ring__in b').textContent = p.ring + '%';
+    e.querySelector('.ring__in span').textContent = p.rf;
+  });
+}
+
+function set(id, v){
+  store[id] = v; D.dataset[id] = v;
+  if (id === 'progress') applyProgress(v);
+  localStorage.setItem('wt-tweaks', JSON.stringify(store));
+  document.querySelectorAll('[data-tw="' + id + '"] button').forEach(b =>
+    b.classList.toggle('on', b.dataset.v === v));
+}
+
+function buildPanel(){
+  const groups = TWEAKS.map(g => `
+    <div class="tp-g" data-for="${g.for}">
+      <div class="tp-g__t">${g.title}</div>
+      ${g.items.map(t => `
+        <div class="tw">
+          <div class="tw__l"><b>${t.label}</b></div>
+          <div class="tw__hint">${t.hint}</div>
+          <div class="tw__opts" data-tw="${t.id}">
+            ${t.opts.map(([v, l]) => `<button data-id="${t.id}" data-v="${v}">${l}</button>`).join('')}
+          </div>
+        </div>`).join('')}
+    </div>`).join('');
+
+  const el = document.createElement('div');
+  el.innerHTML = `
+    <button class="tp-btn" id="tpOpen">⚙︎ Режим тестировщика</button>
+    <div class="tp">
+      <div class="tp__h"><b>Режим тестировщика</b><button class="tp__x" id="tpClose">✕</button></div>
+      <div class="tp__pages">
+        <button data-go="product">Карточка</button>
+        <button data-go="travels">Путешествия</button>
+        <button data-go="map">Карта</button>
+      </div>
+      ${groups}
+      <div class="tp__foot"><button id="tpReset">Сбросить всё</button></div>
+    </div>`;
+  document.body.appendChild(el);
+
+  el.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.id === 'tpOpen')  D.dataset.tp = 'on';
+    if (b.id === 'tpClose') D.dataset.tp = 'off';
+    if (b.id === 'tpReset') { localStorage.removeItem('wt-tweaks'); location.reload(); }
+    if (b.dataset.go) location.hash = b.dataset.go;
+    if (b.dataset.id) set(b.dataset.id, b.dataset.v);
+  });
+}
+
+function route(){
+  const p = (location.hash.slice(1) || 'product').split('?')[0];
+  D.dataset.page = ['product','travels','map'].includes(p) ? p : 'product';
+  D.dataset.menu = 'off';
+  D.dataset.modal = 'off';
+  if (D.dataset.page === 'product') seenProduct = true;
+  document.querySelectorAll('.udrop').forEach(d => d.classList.remove('open'));
+  ctxItem();
+  document.querySelectorAll('.tp__pages button').forEach(b =>
+    b.classList.toggle('on', b.dataset.go === D.dataset.page));
+  window.scrollTo(0, 0);
+}
+
+
+/* ============ навигация: контекстный профиль + «Вы смотрели» ============ */
+const LAST = { id: 'merum-2021', title: 'Вино Мерум Приорати Иниси, 2021', sub: '750 мл · Испания, Приорат', color: '#5a0f1c' };
+const CATS = [['🍷','Вино'],['🥃','Крепкий алкоголь'],['🍺','Пиво и сидр'],['🥂','Игристое'],
+              ['🧀','Сыры и деликатесы'],['🥩','Мясо и птица'],['🐟','Рыба и морепродукты'],['🥗','Готовая еда'],
+              ['🍫','Сладости'],['☕️','Кофе и чай'],['🧃','Напитки'],['🎁','Подарочные наборы']];
+
+const nav = () => D.dataset.navmode || 'explicit';
+let seenProduct = false, dblTimer = null, dblClicks = 0, toastTimer = null;
+
+function mountNav(){
+  const el = document.createElement('div');
+  el.innerHTML = `
+    <div class="modal" id="catalogModal">
+      <div class="modal__bg" data-close></div>
+      <div class="modal__win">
+        <div class="modal__h"><b class="h3">Каталог</b><button class="modal__x" data-close>✕</button></div>
+        <a class="recent" href="#product" data-close>
+          <span data-bottle="${LAST.color}"></span>
+          <span class="recent__t">
+            <span class="recent__lbl">Вы смотрели · продолжить</span>
+            <b>${LAST.title}</b>
+            <span class="p14 mut1">${LAST.sub} · откроется мгновенно, состояние сохранено</span>
+          </span>
+          <span class="btn btn--somelie">Вернуться <i data-lucide="arrow-right" class="i20"></i></span>
+        </a>
+        <div class="cats">
+          ${CATS.map(([e, n]) => `<a class="cat" href="#product" data-close><span>${e}</span>${n}</a>`).join('')}
+        </div>
+      </div>
+    </div>
+    <div class="toast" id="toast"></div>`;
+  document.body.appendChild(el);
+  el.querySelectorAll('[data-bottle]').forEach(x => x.innerHTML = bottle('bottle', x.dataset.bottle));
+}
+
+function toast(html, ms = 5000){
+  const t = document.getElementById('toast');
+  t.innerHTML = html; D.dataset.toast = 'on';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => D.dataset.toast = 'off', ms);
+}
+const openModal  = () => D.dataset.modal = 'on';
+const closeModal = () => D.dataset.modal = 'off';
+
+function ctxItem(){
+  const i = document.getElementById('ctxItem'); if (!i) return;
+  const onProduct = D.dataset.page === 'product';
+  i.href = onProduct ? '#travels' : '#product';
+  i.innerHTML = onProduct
+    ? `<i data-lucide="book-open" class="i20"></i><span><b>Мои винные путешествия</b>
+       <small>вы смотрите вино — открыть винный профиль</small></span>`
+    : `<i data-lucide="layout-grid" class="i20"></i><span><b>Вернуться к вину</b>
+       <small>${LAST.title}</small></span>`;
+  if (window.lucide) lucide.createIcons();
+}
+
+document.addEventListener('click', e => {
+  if (e.target.closest('[data-close]')) closeModal();
+
+  const cat = e.target.closest('#catalogBtn');
+  if (cat){
+    e.preventDefault();
+    if (nav() !== 'dblclick'){ openModal(); return; }
+    dblClicks++;
+    if (dblClicks === 1){
+      dblTimer = setTimeout(() => {
+        dblClicks = 0;
+        if (seenProduct){
+          location.hash = 'product';
+          toast('Открыли последнюю карточку вместо каталога. Чтобы попасть в каталог — кликните «Каталог» дважды.');
+        } else {
+          openModal();
+          toast('Сохранённой карточки не было, поэтому открылся каталог. Результат клика зависит от невидимого состояния.');
+        }
+      }, 450);
+    } else { clearTimeout(dblTimer); dblClicks = 0; openModal(); }
+    return;
+  }
+
+  const ub = e.target.closest('#userBtn');
+  if (ub){
+    e.preventDefault();
+    const d = ub.closest('.udrop');
+    if (nav() === 'explicit'){ ctxItem(); d.classList.toggle('open'); return; }
+    if (nav() === 'classic'){ location.hash = 'travels'; return; }
+    location.hash = 'travels';
+    toast('Открыли «Винные путешествия», потому что вы смотрели вино. <a href="#travels">Обычный профиль</a>');
+    return;
+  }
+  if (!e.target.closest('.udrop'))
+    document.querySelectorAll('.udrop').forEach(d => d.classList.remove('open'));
+});
+
+/* ---- старт ---- */
+document.querySelectorAll('[data-layout]').forEach(el => {
+  el.outerHTML = el.dataset.layout === 'header' ? HEADER : FOOTER;
+});
+document.querySelectorAll('[data-bottle]').forEach(el => {
+  el.innerHTML = bottle(el.dataset.bottleClass || 'bottle', el.dataset.bottle);
+});
+document.querySelectorAll('[data-worldmap]').forEach(el => {
+  el.innerHTML = worldMap(el.dataset.worldmap ? JSON.parse(el.dataset.worldmap) : {});
+});
+buildPanel();
+mountNav();
+
+const DEFAULTS = {};
+TWEAKS.forEach(g => g.items.forEach(t => DEFAULTS[t.id] = t.opts[0][0]));
+DEFAULTS.progress = 'advanced';
+const saved = JSON.parse(localStorage.getItem('wt-tweaks') || '{}');
+Object.entries({ ...DEFAULTS, ...saved }).forEach(([k, v]) => set(k, v));
+D.dataset.tp = 'off';
+
+addEventListener('hashchange', route);
+route();
+document.addEventListener('click', e => {
+  if (e.target.closest('.side-btn')) D.dataset.menu = D.dataset.menu === 'on' ? 'off' : 'on';
+});
+if (window.lucide) lucide.createIcons();
+
+</script>
+</body>
 </html>
