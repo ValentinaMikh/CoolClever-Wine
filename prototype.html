@@ -298,6 +298,28 @@ svg.i44{width:44px;height:44px}
 .cnt--geo .cnt__r{font-size:16px;font-weight:500;color:var(--sub1);max-width:120px}
 .cnt__ext{position:absolute;top:16px;right:16px;color:var(--sub1)}
 
+/* ---------- лента отзывов ---------- */
+.revs__t{font-size:32px;font-weight:700;line-height:1.2;margin-bottom:24px}
+/* горизонтальная лента: три карточки на десктопе, одна с «подглядыванием» на мобильном */
+.revs__row{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 32px)/3);gap:16px;
+           overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px}
+.rev{scroll-snap-align:start;display:flex;flex-direction:column;gap:12px;
+     padding:16px;border-radius:var(--r-lg);background:var(--bg1)}
+.rev__h{display:flex;align-items:center;gap:12px;min-width:0}
+.rev__img{width:48px;height:48px;border-radius:var(--r);background:var(--white);
+          display:block;padding:4px;flex:none}
+.rev__b{width:100%;height:100%;object-fit:contain}
+.rev__ttl{min-width:0;display:grid;gap:4px}
+.rev__ttl b{font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rev__st{color:var(--secondary);font-size:16px;line-height:1;letter-spacing:1px}
+.rev__st .off{color:var(--bg2)}
+.rev__txt{font-size:14px;line-height:1.4;
+          display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+.rev__f{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:auto}
+.rev__d{font-size:14px;color:var(--sub2)}
+.rev__x{width:32px;height:32px;border-radius:50%;background:var(--white);
+        display:grid;place-items:center;flex:none}
+
 .geo{display:grid;grid-template-columns:1fr 1fr;gap:80px}
 .map-card{display:grid;justify-items:center;gap:24px}
 .map-card__img{width:100%;height:auto}
@@ -511,6 +533,7 @@ html[data-toast="on"] .toast{transform:translateX(-50%)}
   .side-btn{display:inline-flex!important}
   .two,.geo{grid-template-columns:minmax(0,1fr);gap:32px}
   .counters{grid-template-columns:1fr 1fr}
+  .cnt--geo{grid-column:1/-1}
   .cellar__grid{grid-template-columns:repeat(3,1fr)}
   .chars aside{grid-template-columns:1fr}
 }
@@ -533,7 +556,9 @@ html[data-toast="on"] .toast{transform:translateX(-50%)}
   .liner__acts{flex-wrap:wrap;gap:12px}
   .specs{grid-template-columns:1fr}
   .spec__n{width:50%}
-  .counters{grid-template-columns:1fr}
+  .cnt b{font-size:28px}
+  .revs__t{font-size:24px}
+  .revs__row{grid-auto-columns:calc(100% - 48px)}
   .podium{gap:8px}
   .pod{padding:12px 6px}
   .pod__b .bottle{height:110px}
@@ -1001,6 +1026,56 @@ html:not([data-page="travels"]) .side-btn{display:none!important}
             <span class="strow__v">25% <span class="mut3">(23/98)</span></span>
             <span class="mut3 p14">Нет регионов</span></div>
         </div>
+      </div>
+    </section>
+
+    <!-- ============ лента отзывов ============ -->
+    <section class="revs">
+      <h2 class="revs__t">Лента отзывов</h2>
+      <div class="revs__row">
+        <article class="rev">
+          <div class="rev__h">
+            <span class="rev__img" data-bottle="soave" data-bottle-class="rev__b"></span>
+            <span class="rev__ttl">
+              <b>КОРТЕ ОЛИВИ СОАВЕ КЛАССИКО</b>
+              <span class="rev__st">★★★★<span class="off">★</span></span>
+            </span>
+          </div>
+          <p class="rev__txt">Прошло две недели, первая порция была примерно 80-90 мл (в бутылку зашёл воздух), пробка держит плотно, вкус не поплыл.</p>
+          <div class="rev__f">
+            <span class="rev__d">03 дек 2025</span>
+            <button class="rev__x" aria-label="Развернуть отзыв"><i data-lucide="maximize-2" class="i16"></i></button>
+          </div>
+        </article>
+
+        <article class="rev">
+          <div class="rev__h">
+            <span class="rev__img" data-bottle="bellevue" data-bottle-class="rev__b"></span>
+            <span class="rev__ttl">
+              <b>ШАТО БЕЛЬВЮ СЕН-ЖОРЖ</b>
+              <span class="rev__st">★★★★<span class="off">★</span></span>
+            </span>
+          </div>
+          <p class="rev__txt">Послевкусие ближе к бурбону, по моему мнению. 5!!!</p>
+          <div class="rev__f">
+            <span class="rev__d">24 сен 2025</span>
+          </div>
+        </article>
+
+        <article class="rev">
+          <div class="rev__h">
+            <span class="rev__img" data-bottle="inici" data-bottle-class="rev__b"></span>
+            <span class="rev__ttl">
+              <b>Вино Мерум Приорати Иниси</b>
+              <span class="rev__st">★★★★<span class="off">★</span></span>
+            </span>
+          </div>
+          <p class="rev__txt">Послевкусие ближе к бурбону, по моему мнению. 5!!!</p>
+          <div class="rev__f">
+            <span class="rev__d">03 дек 2025</span>
+            <button class="rev__x" aria-label="Развернуть отзыв"><i data-lucide="maximize-2" class="i16"></i></button>
+          </div>
+        </article>
       </div>
     </section>
   </main>

@@ -291,6 +291,28 @@ svg.i44{width:44px;height:44px}
 .cnt--geo .cnt__r{font-size:16px;font-weight:500;color:var(--sub1);max-width:120px}
 .cnt__ext{position:absolute;top:16px;right:16px;color:var(--sub1)}
 
+/* ---------- лента отзывов ---------- */
+.revs__t{font-size:32px;font-weight:700;line-height:1.2;margin-bottom:24px}
+/* горизонтальная лента: три карточки на десктопе, одна с «подглядыванием» на мобильном */
+.revs__row{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 32px)/3);gap:16px;
+           overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px}
+.rev{scroll-snap-align:start;display:flex;flex-direction:column;gap:12px;
+     padding:16px;border-radius:var(--r-lg);background:var(--bg1)}
+.rev__h{display:flex;align-items:center;gap:12px;min-width:0}
+.rev__img{width:48px;height:48px;border-radius:var(--r);background:var(--white);
+          display:block;padding:4px;flex:none}
+.rev__b{width:100%;height:100%;object-fit:contain}
+.rev__ttl{min-width:0;display:grid;gap:4px}
+.rev__ttl b{font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rev__st{color:var(--secondary);font-size:16px;line-height:1;letter-spacing:1px}
+.rev__st .off{color:var(--bg2)}
+.rev__txt{font-size:14px;line-height:1.4;
+          display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+.rev__f{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:auto}
+.rev__d{font-size:14px;color:var(--sub2)}
+.rev__x{width:32px;height:32px;border-radius:50%;background:var(--white);
+        display:grid;place-items:center;flex:none}
+
 .geo{display:grid;grid-template-columns:1fr 1fr;gap:80px}
 .map-card{display:grid;justify-items:center;gap:24px}
 .map-card__img{width:100%;height:auto}
@@ -353,6 +375,12 @@ body.plain{background:var(--white)}
 /* ---------- mobile ---------- */
 @media (max-width:720px){
   :root{--gut:16px}
+  /* счётчики: карточка географии на всю ширину, два счётчика — в ряд */
+  .counters{grid-template-columns:1fr 1fr}
+  .cnt--geo{grid-column:1/-1}
+  .cnt b{font-size:28px}
+  .revs__t{font-size:24px}
+  .revs__row{grid-auto-columns:calc(100% - 48px)}
   .geo{grid-template-columns:minmax(0,1fr);gap:32px}
   .strow{flex-wrap:wrap;row-gap:4px}
   .strow:has(.strow__v:not(:empty)) .strow__n{flex:1 1 auto;min-width:0}
