@@ -433,7 +433,10 @@ body.plain{background:var(--white)}
   /* рейтинг: одна карточка на экран, остальные — скроллом */
   .rate__t{font-size:24px}
   .rate__row{grid-auto-columns:calc(100% - 48px)}
+  .top5{min-width:320px;padding:8px}
+  .top5__h{font-size:18px}
   .top5__img{height:240px}
+  .top5__f b{font-weight:500}
   /* график: всё в столбик, месяцы уезжают в горизонтальный скролл */
   .buys{padding:16px;gap:12px;grid-template-columns:minmax(0,1fr);
         grid-template-areas:"t" "sum" "lg" "chart"}
