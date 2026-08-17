@@ -6,18 +6,19 @@ const HEADER = `
   <div class="hdr__in">
     <div class="hdr__top">
       <div class="hdr__deliv">
-        <i data-lucide="map-pin" class="i16" style="color:var(--express)"></i>
+        <i data-lucide="zap" class="i16" style="color:var(--express)"></i>
         <span class="fw5" style="color:var(--express)">Доставка</span>
         <span class="ellip">ул. Старых Производственников, 205</span>
-        <span class="vr"></span>
-        <span>Сегодня 14:00&nbsp;-&nbsp;16:00</span>
+        <span class="vr hdr__slot"></span>
+        <span class="hdr__slot">Сегодня 14:00&nbsp;-&nbsp;16:00</span>
       </div>
       <nav class="hdr__links">
-        <a href="#">Магазины</a>
-        <a href="#">Вакансии</a>
-        <a href="#">Аренда</a>
+        <a class="hdr__slot" href="#">Магазины</a>
+        <a class="hdr__slot" href="#">Вакансии</a>
+        <a class="hdr__slot" href="#">Аренда</a>
         <span class="vr"></span>
-        <a href="#" class="row">Н. Новгород <i data-lucide="chevron-down" class="i16"></i></a>
+        <a href="#" class="row hdr__slot">Н. Новгород <i data-lucide="chevron-down" class="i16"></i></a>
+        <a href="#" class="row hdr__more">Еще <i data-lucide="chevron-down" class="i16"></i></a>
       </nav>
     </div>
 
@@ -29,9 +30,9 @@ const HEADER = `
         <i data-lucide="search" class="mut1"></i>
         <input placeholder="Бальзамический уксус">
       </label>
-      <button class="btn btn--icon"><i data-lucide="heart"></i><span class="badge">24</span></button>
-      <button class="btn"><i data-lucide="shopping-cart"></i>1 658 ₽<span class="badge">15</span></button>
-      <a class="btn" href="travels.html"><i data-lucide="user"></i>Константин<span class="badge badge--dot"></span></a>
+      <button class="btn btn--icon hdr__fav"><i data-lucide="heart"></i><span class="badge">24</span></button>
+      <button class="btn hdr__slot"><i data-lucide="shopping-cart"></i>1 658 ₽<span class="badge">15</span></button>
+      <a class="btn hdr__slot" href="travels.html"><i data-lucide="user"></i>Константин<span class="badge badge--dot"></span></a>
     </div>
   </div>
 </header>`;

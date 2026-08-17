@@ -17,6 +17,7 @@
   --r:8px; --r-lg:16px; --r-xl:24px;
   --shadow:0 0 4px rgba(0,0,0,.02), 0 2px 8px rgba(0,0,0,.04), 0 6px 18px rgba(0,0,0,.06);
   --page:1440px; --gut:48px;
+  --y24:#D3DEF2;
 }
 
 /* ---------- base ---------- */
@@ -81,6 +82,7 @@ svg.i44{width:44px;height:44px}
 .hdr__deliv .ellip{max-width:210px}
 .hdr__links{display:flex;align-items:center;gap:8px}
 .hdr__links a{padding:8px;border-radius:var(--r)}
+.hdr__more{display:none}
 .hdr__links a:hover{background:var(--bg1)}
 .hdr__act{display:flex;align-items:center;gap:8px;padding:4px 0}
 .logo{width:46px;height:46px;border-radius:50%;background:var(--primary-bg);display:grid;place-items:center;
@@ -303,7 +305,7 @@ svg.i44{width:44px;height:44px}
 /* горизонтальная лента: три карточки на десктопе, одна с «подглядыванием» на мобильном */
 .revs__row{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 32px)/3);gap:16px;
            overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px}
-.rev{scroll-snap-align:start;display:flex;flex-direction:column;gap:12px;
+.rev{scroll-snap-align:start;min-width:0;display:flex;flex-direction:column;gap:12px;
      padding:16px;border-radius:var(--r-lg);background:var(--bg1)}
 .rev__h{display:flex;align-items:center;gap:12px;min-width:0}
 .rev__img{width:48px;height:48px;border-radius:var(--r);background:var(--white);
@@ -319,6 +321,59 @@ svg.i44{width:44px;height:44px}
 .rev__d{font-size:14px;color:var(--sub2)}
 .rev__x{width:32px;height:32px;border-radius:50%;background:var(--white);
         display:grid;place-items:center;flex:none}
+
+/* ---------- покупки напитков ---------- */
+/* Раскладка задаётся областями: на десктопе сумма и график в одной строке,
+   на мобильном всё в столбик — заголовок, сумма, легенда, график. */
+.buys{display:grid;align-items:center;gap:16px 40px;padding:24px;
+      border:1px solid var(--border);
+      grid-template-columns:auto minmax(0,1fr);
+      grid-template-areas:"t lg" "sum chart"}
+.buys__t{grid-area:t;font-size:20px;font-weight:700}
+.buys__lg{grid-area:lg;justify-self:end;display:flex;align-items:center;gap:16px;font-size:14px}
+.buys__lg span{display:inline-flex;align-items:center;gap:8px}
+.buys__lg span::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--y24)}
+.buys__lg .y25::before{background:var(--somelie)}
+.buys__sum{grid-area:sum;display:flex;align-items:baseline;gap:12px}
+.buys__sum b{font-size:64px;font-weight:700;line-height:1}
+.buys__d{display:inline-flex;align-items:center;gap:4px;font-size:20px;font-weight:700;white-space:nowrap}
+.buys__d svg{color:var(--accent)}
+.chart{grid-area:chart;display:flex;align-items:flex-end;gap:8px}
+.chart__m{flex:1;display:grid;justify-items:center;gap:8px}
+.chart__b{height:110px;display:flex;align-items:flex-end;gap:4px}
+.chart__b i{width:10px;border-radius:6px;background:var(--y24);height:calc(var(--h)*1%)}
+.chart__b i.on{background:var(--somelie)}
+.chart__l{font-size:12px;color:var(--sub1);white-space:nowrap}
+
+/* ---------- рейтинг открытий ---------- */
+.rate__t{font-size:32px;font-weight:700;line-height:1.2;margin-bottom:24px}
+/* три карточки в ряд; на мобильном — лента с горизонтальным скроллом */
+.rate__row{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 32px)/3);gap:16px;
+           overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;align-items:stretch}
+.top5{scroll-snap-align:start;min-width:0;display:flex;flex-direction:column;gap:16px;
+      padding:16px;border-radius:var(--r-lg);background:var(--bg1)}
+.top5__h{display:flex;align-items:center;gap:8px;font-size:20px;font-weight:700}
+.top5__img{height:300px;border-radius:12px;background:var(--white);display:grid;place-items:center;padding:16px}
+.top5__img img{max-width:100%;max-height:100%;object-fit:contain}
+.top5__l{display:grid;grid-template-columns:minmax(0,1fr)}
+.top5__i{display:flex;align-items:center;gap:12px;min-width:0;padding:12px 0;border-bottom:1px solid var(--border)}
+.top5__i:last-child{border-bottom:0}
+.top5__n{width:24px;height:24px;border-radius:50%;background:var(--bg2);color:var(--sub1);
+         font-size:12px;display:grid;place-items:center;flex:none}
+.top5__i--1 .top5__n{background:none;font-size:18px}
+.top5__x{min-width:0}
+.top5__x b{display:block;font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.top5__x span{font-size:14px;color:var(--sub1)}
+.top5__f{display:flex;align-items:center;justify-content:space-between;gap:12px;
+         padding:16px;border-radius:12px;background:var(--white);margin-top:auto}
+.top5__f b{font-size:16px;font-weight:700;max-width:100px}
+.top5__d{display:inline-flex;align-items:center;gap:4px;font-size:14px;font-weight:700;white-space:nowrap}
+.top5__d svg{color:var(--accent)}
+.top5__d--up svg{color:var(--primary)}
+.top5__v{font-size:36px;font-weight:700;line-height:1}
+/* фотографию виноградника кадрируем во всю плитку, логотип и бутылку — вписываем */
+.top5__img--fill{padding:0;overflow:hidden}
+.top5__img--fill img{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover}
 
 .geo{display:grid;grid-template-columns:1fr 1fr;gap:80px}
 .map-card{display:grid;justify-items:center;gap:24px}
@@ -542,9 +597,26 @@ html[data-toast="on"] .toast{transform:translateX(-50%)}
   .h1,.h2{font-size:26px}
   .h3,.sec__t,.blk__t{font-size:20px}
   .sect{padding:16px;border-radius:var(--r-lg)}
-  .hdr__top{display:none}
-  .hdr__act{flex-wrap:wrap}
-  .search{order:9;flex:1 0 100%}
+  /* рейтинг: одна карточка на экран, остальные — скроллом */
+  .rate__t{font-size:24px}
+  .rate__row{grid-auto-columns:calc(100% - 48px)}
+  .top5__img{height:240px}
+  /* график: всё в столбик, месяцы уезжают в горизонтальный скролл */
+  .buys{padding:16px;gap:12px;grid-template-columns:minmax(0,1fr);
+        grid-template-areas:"t" "sum" "lg" "chart"}
+  .buys__lg{justify-self:start}
+  .buys__sum b{font-size:48px}
+  .chart{overflow-x:auto;gap:4px;padding-bottom:4px}
+  .chart__m{flex:0 0 36px}
+  /* шапка: верхняя строка остаётся, но сжимается до адреса и «Еще» */
+  .hdr__top{display:flex;gap:8px}
+  .hdr__slot{display:none!important}
+  .hdr__more{display:inline-flex}
+  .hdr__deliv .ellip{max-width:none}
+  .hdr__act{flex-wrap:nowrap;gap:8px}
+  .hdr__act .logo,.hdr__act .btn--somelie,.hdr__act .side-btn{display:none}
+  .search{order:0;flex:1 1 auto}
+  .hdr__fav{flex:none}
   .pdp{grid-template-columns:minmax(0,1fr)}
   .gal__main{height:420px}
   .gal__main .bottle{height:360px}
@@ -570,7 +642,6 @@ html[data-toast="on"] .toast{transform:translateX(-50%)}
   .ftr__soc{flex-wrap:wrap}
   .tp{width:100%}
   html[data-tp="on"] body{margin-right:0}
-  .hdr__act{gap:6px}
   .hdr__act .btn{padding:10px 12px}
   .hdr__act .btn--secondary{display:none}
   .maker{flex-wrap:wrap;gap:12px}
@@ -975,6 +1046,86 @@ html:not([data-page="travels"]) .side-btn{display:none!important}
         <b class="js-p-rates">68</b><span>Мои оценки</span></a>
     </section>
 
+    <!-- ============ покупки напитков ============ -->
+    <section class="card buys">
+      <h2 class="buys__t">Покупки напитков</h2>
+      <div class="buys__lg"><span>2024</span><span class="y25">2025</span></div>
+      <div class="buys__sum">
+        <b>34</b>
+        <span class="buys__d">-15% <i data-lucide="arrow-down-right" class="i20"></i></span>
+      </div>
+      <div class="chart">
+        <div class="chart__m"><span class="chart__b"><i class="on" style="--h:11"></i><i style="--h:23"></i></span><span class="chart__l">Янв</span></div>
+        <div class="chart__m"><span class="chart__b"><i class="on" style="--h:8"></i><i style="--h:64"></i></span><span class="chart__l">Фев</span></div>
+        <div class="chart__m"><span class="chart__b"><i class="on" style="--h:12"></i><i style="--h:48"></i></span><span class="chart__l">Март</span></div>
+        <div class="chart__m"><span class="chart__b"><i class="on" style="--h:25"></i><i style="--h:36"></i></span><span class="chart__l">Апр</span></div>
+        <div class="chart__m"><span class="chart__b"><i class="on" style="--h:56"></i><i style="--h:26"></i></span><span class="chart__l">Май</span></div>
+        <div class="chart__m"><span class="chart__b"><i class="on" style="--h:70"></i><i style="--h:81"></i></span><span class="chart__l">Июнь</span></div>
+        <div class="chart__m"><span class="chart__b"><i class="on" style="--h:100"></i><i style="--h:67"></i></span><span class="chart__l">Июль</span></div>
+        <div class="chart__m"><span class="chart__b"><i class="on" style="--h:83"></i><i style="--h:11"></i></span><span class="chart__l">Сент</span></div>
+        <div class="chart__m"><span class="chart__b"><i class="on" style="--h:31"></i><i style="--h:14"></i></span><span class="chart__l">Окт</span></div>
+        <div class="chart__m"><span class="chart__b"><i class="on" style="--h:73"></i><i style="--h:44"></i></span><span class="chart__l">Нояб</span></div>
+        <div class="chart__m"><span class="chart__b"><i class="on" style="--h:48"></i><i style="--h:58"></i></span><span class="chart__l">Дек</span></div>
+      </div>
+    </section>
+
+    <!-- ============ рейтинг открытий ============ -->
+    <section class="rate">
+      <h2 class="rate__t">Рейтинг открытий</h2>
+      <div class="rate__row">
+        <article class="top5">
+          <div class="top5__h">Напитки <span class="chip">ТОП-5</span></div>
+          <div class="top5__img"><img src="Resources/Напитки топ 5.png" alt="" loading="lazy"></div>
+          <div class="top5__l">
+            <div class="top5__i top5__i--1"><span class="top5__n">🏆</span><span class="top5__x"><b>МЕРУМ ПРИОРАТИ ИНИСИ 2021</b><span>13 шт</span></span></div>
+            <div class="top5__i"><span class="top5__n">2</span><span class="top5__x"><b>КАЗАЛИ ДЕЛЬ БАРОНЕ БАРБЕРА</b><span>9 шт</span></span></div>
+            <div class="top5__i"><span class="top5__n">3</span><span class="top5__x"><b>ДОМЕН КЛАВЕЛЬ РЕГУЛУС</b><span>6 шт</span></span></div>
+            <div class="top5__i"><span class="top5__n">4</span><span class="top5__x"><b>ШАТО БЕЛЬВЮ СЕН-ЖОРЖ 2017</b><span>3 шт</span></span></div>
+            <div class="top5__i"><span class="top5__n">5</span><span class="top5__x"><b>КОРТЕ ОЛИВИ СОАВЕ КЛАССИКО</b><span>2 шт</span></span></div>
+          </div>
+          <div class="top5__f">
+            <b>Новые напитки</b>
+            <span class="top5__d">-15% <i data-lucide="arrow-down-right" class="i16"></i></span>
+            <span class="top5__v">24</span>
+          </div>
+        </article>
+
+        <article class="top5">
+          <div class="top5__h">Бренды <span class="chip">ТОП-5</span></div>
+          <div class="top5__img"><img src="Resources/Бренды топ 5.png" alt="" loading="lazy"></div>
+          <div class="top5__l">
+            <div class="top5__i top5__i--1"><span class="top5__n">🏆</span><span class="top5__x"><b>Boinaud</b><span>Испания</span></span></div>
+            <div class="top5__i"><span class="top5__n">2</span><span class="top5__x"><b>Château Margaux</b><span>Франция</span></span></div>
+            <div class="top5__i"><span class="top5__n">3</span><span class="top5__x"><b>Barons de Rothschild</b><span>Франция</span></span></div>
+            <div class="top5__i"><span class="top5__n">4</span><span class="top5__x"><b>Antinori</b><span>Италия</span></span></div>
+            <div class="top5__i"><span class="top5__n">5</span><span class="top5__x"><b>González Byass</b><span>Испания</span></span></div>
+          </div>
+          <div class="top5__f">
+            <b>Новые бренды</b>
+            <span class="top5__d top5__d--up">+50% <i data-lucide="arrow-up-right" class="i16"></i></span>
+            <span class="top5__v">2</span>
+          </div>
+        </article>
+
+        <article class="top5">
+          <div class="top5__h">Производители <span class="chip">ТОП-5</span></div>
+          <div class="top5__img top5__img--fill"><img src="Resources/Производители топ 5.png" alt="" loading="lazy"></div>
+          <div class="top5__l">
+            <div class="top5__i top5__i--1"><span class="top5__n">🏆</span><span class="top5__x"><b>Barons de Rothschild</b><span>Франция</span></span></div>
+            <div class="top5__i"><span class="top5__n">2</span><span class="top5__x"><b>Antinori</b><span>Италия</span></span></div>
+            <div class="top5__i"><span class="top5__n">3</span><span class="top5__x"><b>González Byass</b><span>Испания</span></span></div>
+            <div class="top5__i"><span class="top5__n">4</span><span class="top5__x"><b>Vega Sicilia</b><span>Испания</span></span></div>
+            <div class="top5__i"><span class="top5__n">5</span><span class="top5__x"><b>Château Margaux</b><span>Франция</span></span></div>
+          </div>
+          <div class="top5__f">
+            <b>Новые производители</b>
+            <span class="top5__d top5__d--up">+15% <i data-lucide="arrow-up-right" class="i16"></i></span>
+            <span class="top5__v">12</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <!-- ============ точка входа в карту ============ -->
     <section class="geo js-has-data">
       <div>
@@ -1234,18 +1385,19 @@ const HEADER = `
   <div class="hdr__in">
     <div class="hdr__top">
       <div class="hdr__deliv">
-        <i data-lucide="map-pin" class="i16" style="color:var(--express)"></i>
+        <i data-lucide="zap" class="i16" style="color:var(--express)"></i>
         <span class="fw5" style="color:var(--express)">Доставка</span>
         <span class="ellip">ул. Старых Производственников, 205</span>
-        <span class="vr"></span>
-        <span>Сегодня 14:00&nbsp;-&nbsp;16:00</span>
+        <span class="vr hdr__slot"></span>
+        <span class="hdr__slot">Сегодня 14:00&nbsp;-&nbsp;16:00</span>
       </div>
       <nav class="hdr__links">
-        <a href="#">Магазины</a>
-        <a href="#">Вакансии</a>
-        <a href="#">Аренда</a>
+        <a class="hdr__slot" href="#">Магазины</a>
+        <a class="hdr__slot" href="#">Вакансии</a>
+        <a class="hdr__slot" href="#">Аренда</a>
         <span class="vr"></span>
-        <a href="#" class="row">Н. Новгород <i data-lucide="chevron-down" class="i16"></i></a>
+        <a href="#" class="row hdr__slot">Н. Новгород <i data-lucide="chevron-down" class="i16"></i></a>
+        <a href="#" class="row hdr__more">Еще <i data-lucide="chevron-down" class="i16"></i></a>
       </nav>
     </div>
 
@@ -1258,9 +1410,9 @@ const HEADER = `
         <i data-lucide="search" class="mut1"></i>
         <input placeholder="Бальзамический уксус">
       </label>
-      <button class="btn btn--icon"><i data-lucide="heart"></i><span class="badge">24</span></button>
-      <button class="btn"><i data-lucide="shopping-cart"></i>1 658 ₽<span class="badge">15</span></button>
-      <div class="udrop">
+      <button class="btn btn--icon hdr__fav"><i data-lucide="heart"></i><span class="badge">24</span></button>
+      <button class="btn hdr__slot"><i data-lucide="shopping-cart"></i>1 658 ₽<span class="badge">15</span></button>
+      <div class="udrop hdr__slot">
         <button class="btn" id="userBtn"><i data-lucide="user"></i>Константин<span class="badge badge--dot"></span></button>
         <div class="udrop__m">
           <a class="udrop__i udrop__i--ctx" id="ctxItem" href="#travels"></a>

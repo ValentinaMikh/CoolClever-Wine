@@ -10,6 +10,7 @@
   --r:8px; --r-lg:16px; --r-xl:24px;
   --shadow:0 0 4px rgba(0,0,0,.02), 0 2px 8px rgba(0,0,0,.04), 0 6px 18px rgba(0,0,0,.06);
   --page:1440px; --gut:48px;
+  --y24:#D3DEF2;
 }
 
 /* ---------- base ---------- */
@@ -74,6 +75,7 @@ svg.i44{width:44px;height:44px}
 .hdr__deliv .ellip{max-width:210px}
 .hdr__links{display:flex;align-items:center;gap:8px}
 .hdr__links a{padding:8px;border-radius:var(--r)}
+.hdr__more{display:none}
 .hdr__links a:hover{background:var(--bg1)}
 .hdr__act{display:flex;align-items:center;gap:8px;padding:4px 0}
 .logo{width:46px;height:46px;border-radius:50%;background:var(--primary-bg);display:grid;place-items:center;
@@ -296,7 +298,7 @@ svg.i44{width:44px;height:44px}
 /* горизонтальная лента: три карточки на десктопе, одна с «подглядыванием» на мобильном */
 .revs__row{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 32px)/3);gap:16px;
            overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px}
-.rev{scroll-snap-align:start;display:flex;flex-direction:column;gap:12px;
+.rev{scroll-snap-align:start;min-width:0;display:flex;flex-direction:column;gap:12px;
      padding:16px;border-radius:var(--r-lg);background:var(--bg1)}
 .rev__h{display:flex;align-items:center;gap:12px;min-width:0}
 .rev__img{width:48px;height:48px;border-radius:var(--r);background:var(--white);
@@ -312,6 +314,59 @@ svg.i44{width:44px;height:44px}
 .rev__d{font-size:14px;color:var(--sub2)}
 .rev__x{width:32px;height:32px;border-radius:50%;background:var(--white);
         display:grid;place-items:center;flex:none}
+
+/* ---------- покупки напитков ---------- */
+/* Раскладка задаётся областями: на десктопе сумма и график в одной строке,
+   на мобильном всё в столбик — заголовок, сумма, легенда, график. */
+.buys{display:grid;align-items:center;gap:16px 40px;padding:24px;
+      border:1px solid var(--border);
+      grid-template-columns:auto minmax(0,1fr);
+      grid-template-areas:"t lg" "sum chart"}
+.buys__t{grid-area:t;font-size:20px;font-weight:700}
+.buys__lg{grid-area:lg;justify-self:end;display:flex;align-items:center;gap:16px;font-size:14px}
+.buys__lg span{display:inline-flex;align-items:center;gap:8px}
+.buys__lg span::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--y24)}
+.buys__lg .y25::before{background:var(--somelie)}
+.buys__sum{grid-area:sum;display:flex;align-items:baseline;gap:12px}
+.buys__sum b{font-size:64px;font-weight:700;line-height:1}
+.buys__d{display:inline-flex;align-items:center;gap:4px;font-size:20px;font-weight:700;white-space:nowrap}
+.buys__d svg{color:var(--accent)}
+.chart{grid-area:chart;display:flex;align-items:flex-end;gap:8px}
+.chart__m{flex:1;display:grid;justify-items:center;gap:8px}
+.chart__b{height:110px;display:flex;align-items:flex-end;gap:4px}
+.chart__b i{width:10px;border-radius:6px;background:var(--y24);height:calc(var(--h)*1%)}
+.chart__b i.on{background:var(--somelie)}
+.chart__l{font-size:12px;color:var(--sub1);white-space:nowrap}
+
+/* ---------- рейтинг открытий ---------- */
+.rate__t{font-size:32px;font-weight:700;line-height:1.2;margin-bottom:24px}
+/* три карточки в ряд; на мобильном — лента с горизонтальным скроллом */
+.rate__row{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 32px)/3);gap:16px;
+           overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;align-items:stretch}
+.top5{scroll-snap-align:start;min-width:0;display:flex;flex-direction:column;gap:16px;
+      padding:16px;border-radius:var(--r-lg);background:var(--bg1)}
+.top5__h{display:flex;align-items:center;gap:8px;font-size:20px;font-weight:700}
+.top5__img{height:300px;border-radius:12px;background:var(--white);display:grid;place-items:center;padding:16px}
+.top5__img img{max-width:100%;max-height:100%;object-fit:contain}
+.top5__l{display:grid;grid-template-columns:minmax(0,1fr)}
+.top5__i{display:flex;align-items:center;gap:12px;min-width:0;padding:12px 0;border-bottom:1px solid var(--border)}
+.top5__i:last-child{border-bottom:0}
+.top5__n{width:24px;height:24px;border-radius:50%;background:var(--bg2);color:var(--sub1);
+         font-size:12px;display:grid;place-items:center;flex:none}
+.top5__i--1 .top5__n{background:none;font-size:18px}
+.top5__x{min-width:0}
+.top5__x b{display:block;font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.top5__x span{font-size:14px;color:var(--sub1)}
+.top5__f{display:flex;align-items:center;justify-content:space-between;gap:12px;
+         padding:16px;border-radius:12px;background:var(--white);margin-top:auto}
+.top5__f b{font-size:16px;font-weight:700;max-width:100px}
+.top5__d{display:inline-flex;align-items:center;gap:4px;font-size:14px;font-weight:700;white-space:nowrap}
+.top5__d svg{color:var(--accent)}
+.top5__d--up svg{color:var(--primary)}
+.top5__v{font-size:36px;font-weight:700;line-height:1}
+/* фотографию виноградника кадрируем во всю плитку, логотип и бутылку — вписываем */
+.top5__img--fill{padding:0;overflow:hidden}
+.top5__img--fill img{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover}
 
 .geo{display:grid;grid-template-columns:1fr 1fr;gap:80px}
 .map-card{display:grid;justify-items:center;gap:24px}
@@ -375,6 +430,27 @@ body.plain{background:var(--white)}
 /* ---------- mobile ---------- */
 @media (max-width:720px){
   :root{--gut:16px}
+  /* рейтинг: одна карточка на экран, остальные — скроллом */
+  .rate__t{font-size:24px}
+  .rate__row{grid-auto-columns:calc(100% - 48px)}
+  .top5__img{height:240px}
+  /* график: всё в столбик, месяцы уезжают в горизонтальный скролл */
+  .buys{padding:16px;gap:12px;grid-template-columns:minmax(0,1fr);
+        grid-template-areas:"t" "sum" "lg" "chart"}
+  .buys__lg{justify-self:start}
+  .buys__sum b{font-size:48px}
+  .chart{overflow-x:auto;gap:4px;padding-bottom:4px}
+  .chart__m{flex:0 0 36px}
+  /* шапка: верхняя строка остаётся, но сжимается до адреса и «Еще» */
+  .hdr__top{display:flex;gap:8px}
+  .hdr__slot{display:none!important}
+  .hdr__more{display:inline-flex}
+  .hdr__deliv .ellip{max-width:none}
+  .hdr__act{flex-wrap:nowrap;gap:8px}
+  .hdr__act .logo,.hdr__act .btn--somelie,.hdr__act .side-btn{display:none}
+  .search{order:0;flex:1 1 auto}
+  .hdr__fav{flex:none}
+  .hdr__act .btn--secondary{display:none}
   /* счётчики: карточка географии на всю ширину, два счётчика — в ряд */
   .counters{grid-template-columns:1fr 1fr}
   .cnt--geo{grid-column:1/-1}
