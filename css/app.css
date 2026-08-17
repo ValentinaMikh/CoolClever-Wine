@@ -344,10 +344,10 @@ svg.i44{width:44px;height:44px}
 .rate__row{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 32px)/3);gap:16px;
            overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;align-items:stretch}
 .top5{scroll-snap-align:start;min-width:0;display:flex;flex-direction:column;gap:16px;
-      padding:16px;border-radius:var(--r-lg);background:var(--bg1)}
+      padding:8px;border-radius:var(--r-lg);background:var(--bg1)}
 .top5__h{display:flex;align-items:center;gap:8px;font-size:20px;font-weight:700}
-.top5__img{height:300px;border-radius:12px;background:var(--white);display:grid;place-items:center;padding:16px}
-.top5__img img{max-width:100%;max-height:100%;object-fit:contain}
+.top5__img{height:300px;border-radius:12px;background:var(--white);display:block;padding:16px}
+.top5__img img{width:100%;height:100%;object-fit:contain}
 .top5__l{display:grid;grid-template-columns:minmax(0,1fr)}
 .top5__i{display:flex;align-items:center;gap:12px;min-width:0;padding:12px 0;border-bottom:1px solid var(--border)}
 .top5__i:last-child{border-bottom:0}
@@ -366,7 +366,7 @@ svg.i44{width:44px;height:44px}
 .top5__v{font-size:36px;font-weight:700;line-height:1}
 /* фотографию виноградника кадрируем во всю плитку, логотип и бутылку — вписываем */
 .top5__img--fill{padding:0;overflow:hidden}
-.top5__img--fill img{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover}
+.top5__img--fill img{object-fit:cover}
 
 .geo{display:grid;grid-template-columns:1fr 1fr;gap:80px}
 .map-card{display:grid;justify-items:center;gap:24px}
@@ -432,8 +432,8 @@ body.plain{background:var(--white)}
   :root{--gut:16px}
   /* рейтинг: одна карточка на экран, остальные — скроллом */
   .rate__t{font-size:24px}
-  .rate__row{grid-auto-columns:calc(100% - 48px)}
-  .top5{min-width:320px;padding:8px}
+  .rate__row{grid-auto-columns:max(320px, calc(100% - 48px))}
+  .top5{min-width:320px}
   .top5__h{font-size:18px}
   .top5__img{height:240px}
   .top5__f b{font-weight:500}
