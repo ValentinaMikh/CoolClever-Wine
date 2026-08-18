@@ -457,7 +457,8 @@ svg.i44{width:44px;height:44px}
 .wine__s{font-size:12px;color:var(--sub2);margin:4px 0}
 .wine__r{display:flex;align-items:center;gap:6px;font-size:12px}
 
-.cellar{background:#2A2A2A;color:#fff;border-radius:var(--r-xl);padding:24px;margin-top:24px}
+.cellar{background:#2A2A2A url("../Resources/wine-cellar.png") center/cover no-repeat;
+        color:#fff;border-radius:var(--r-xl);padding:24px;margin-top:24px}
 .cellar__h{display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:18px;font-weight:500}
 .cellar__tabs{display:flex;gap:2px;background:#3A3A3A;border-radius:var(--r);padding:2px;margin:16px 0}
 .cellar__tab{flex:1;height:40px;border-radius:6px;display:flex;align-items:center;justify-content:center;gap:8px;
