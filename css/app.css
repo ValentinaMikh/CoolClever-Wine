@@ -198,7 +198,7 @@ svg.i44{width:44px;height:44px}
 
 .maker{display:flex;align-items:center;gap:16px;padding:16px;background:var(--white);
        border:1px solid var(--border);border-radius:var(--r-lg)}
-.maker__img{width:86px;height:86px;border-radius:var(--r);flex:none}
+.maker__img{width:86px;height:86px;border-radius:var(--r);flex:none;object-fit:cover}
 .maker__txt{flex:1;min-width:0}
 .maker__logo{width:88px;height:88px;object-fit:contain;flex:none}
 
@@ -242,7 +242,7 @@ svg.i44{width:44px;height:44px}
                  background:var(--bg2)}
 .store__i.is-on::after{background:var(--somelie)}
 .temp b{display:block;font-size:24px;font-weight:400;margin-top:4px}
-.glass{width:110px;height:150px;margin:0 auto}
+.glass{width:110px;height:150px;margin:0 auto;object-fit:contain}
 .tastes{text-align:left;display:grid;gap:16px}
 .tastes b{display:block;font-size:16px;font-weight:500;margin-bottom:4px}
 .tastes p{font-size:14px;line-height:1.4}
