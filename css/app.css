@@ -124,6 +124,7 @@ svg.i44{width:44px;height:44px}
 .crumbs a:hover{color:var(--somelie)}
 .liner__acts{display:flex;align-items:center;gap:16px}
 .liner__acts button{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--sub1)}
+.liner__tgl{display:contents}   /* на десктопе группа прозрачна */
 
 .pdp{display:grid;grid-template-columns:424px minmax(0,1fr) 420px;gap:0}
 
@@ -131,13 +132,10 @@ svg.i44{width:44px;height:44px}
 .gal{padding:12px}
 .gal__main{position:relative;height:640px;background:var(--bg1);border-radius:var(--r-lg);
            display:grid;place-items:center;overflow:hidden}
-.medal{position:absolute;left:8px;width:80px;height:80px;border-radius:50%;display:grid;place-items:center;
-       text-align:center;line-height:1.05;color:#5b4a12;font-weight:700;
-       background:radial-gradient(circle at 35% 30%,#ffe89a,#e8b93c 60%,#c99a1e);box-shadow:var(--shadow)}
-.medal--1{top:8px;font-size:9px;letter-spacing:.4px}
+.medal{position:absolute;left:8px;width:80px;height:80px;border-radius:50%;
+       filter:drop-shadow(0 2px 6px rgba(0,0,0,.14))}
+.medal--1{top:8px}
 .medal--2{top:96px}
-.medal--2 b{font-size:24px;display:block}
-.medal--2 span{font-size:7px;letter-spacing:.5px}
 .gal__tag{position:absolute;top:8px;right:8px;height:28px;padding:0 10px;border-radius:6px;
           background:var(--bg2);color:var(--sub1);font-size:14px;display:grid;place-items:center}
 .bottle{width:auto;height:520px;object-fit:contain}
@@ -575,4 +573,63 @@ body.plain{background:var(--white)}
   .strow:has(.strow__v:not(:empty))>.pips,
   .strow:has(.strow__v:not(:empty))>.mut3{order:1;margin-left:auto}
   .strow:has(.strow__v:not(:empty)) .strow__v{order:2;flex:0 0 100%}
+
+  /* ---------- карточка товара (Экран 1) ----------
+     Раскладываем в одну колонку: крошки → фото → действия → заголовок →
+     год → цена → описание с оценками. Блоки .liner/.pdp/.info становятся
+     прозрачными (display:contents), чтобы их дети попали в общий поток. */
+  .sect{padding:16px;border-radius:var(--r-lg);display:flex;flex-direction:column}
+  .liner,.pdp,.info{display:contents}
+
+  .crumbs{order:1;font-size:12px;color:var(--sub2);gap:6px;
+          flex-wrap:nowrap;overflow-x:auto;padding-bottom:12px}
+  .crumbs>*{white-space:nowrap}
+  .crumbs .mut{overflow:hidden;text-overflow:ellipsis}
+  .gal{order:2;padding:0}
+  .gal__main{height:auto;aspect-ratio:326/512;place-items:stretch;padding:16px}
+  .gal__main .bottle{width:100%;height:100%;max-width:none;object-fit:contain}
+  .medal{left:12px;width:64px;height:64px}
+  .medal--1{top:12px}
+  .medal--2{top:84px}
+  .gal__tag{top:12px;right:12px}
+  .gal__thumbs{margin-top:12px;gap:6px}
+  .thumb{width:56px;height:56px}
+
+  /* «Поделиться» отдельной строкой, два переключателя — под разделителем */
+  .liner__acts{order:3;flex-wrap:wrap;gap:0;width:100%;padding-top:16px}
+  .liner__acts button{padding:0}
+  .liner__acts>button:first-child{flex:1 0 100%;justify-content:flex-start;
+        padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:16px}
+  .liner__acts button.pink{color:var(--somelie)}
+  /* пара переключателей всегда в одну строку, кегль тянется за шириной экрана */
+  .liner__tgl{display:flex;flex:1 0 100%;flex-wrap:nowrap;justify-content:space-between;
+              gap:8px;overflow:hidden}
+  .liner__tgl button{font-size:clamp(10px,2.75vw,12.5px);gap:3px;white-space:nowrap;min-width:0}
+  .liner__tgl svg{width:16px;height:16px}
+
+  .info__head{order:4;gap:8px;padding-top:24px;align-items:flex-start}
+  .info__sub{font-size:20px}
+  .info__head .h2{font-size:26px}
+  .tags{font-size:13px;gap:6px}
+  .info>div:nth-of-type(2){order:5;padding-top:24px}   /* «Выбрать год» */
+  .years{gap:6px}
+  .year{height:36px;padding:0 10px;font-size:14px}
+
+  /* цена и описание — отдельными «карточками» с серым зазором */
+  .buy{order:6}
+  .info>div:nth-of-type(3){order:7}                    /* цитата */
+  .buy,.info>div:nth-of-type(3){
+        margin:0 -16px;padding:24px 16px 0;border-top:8px solid var(--bg1)}
+  .info>div:nth-of-type(4){order:8;padding-top:24px}   /* оценки и награды */
+
+  .buy__card{padding:0;background:none}
+  .buy__price b{font-size:26px}
+  .buy__acts{display:none}                             /* CTA уходит в нижнюю панель */
+  .stock{margin-top:16px;padding:14px 16px;background:var(--white);
+         border:1px solid var(--border);font-size:14px;gap:6px}
+
+  .quote{font-size:15px}
+  .rates{gap:24px;margin-top:24px}
+  .rate__top{font-size:17px}
+  .awards{gap:20px}
 }
