@@ -20,8 +20,10 @@
       </nav>
       <div class="liner__acts">
         <button><i data-lucide="share-2" class="i18"></i>Поделиться</button>
-        <button class="pink fw5"><i data-lucide="heart" class="i18" fill="currentColor"></i>Хочу попробовать (3&nbsp;467)</button>
-        <button><i data-lucide="check-circle-2" class="i18"></i>Уже попробовал (3&nbsp;467)</button>
+        <span class="liner__tgl">
+          <button class="pink fw5"><i data-lucide="heart" class="i18" fill="currentColor"></i>Хочу попробовать (3&nbsp;467)</button>
+          <button><i data-lucide="check-circle-2" class="i18"></i>Уже попробовал (3&nbsp;467)</button>
+        </span>
       </div>
     </div>
 
@@ -29,8 +31,8 @@
       <!-- фото -->
       <div class="gal">
         <div class="gal__main">
-          <div class="medal medal--1">SOMELIE<br>COLLECTION<br>GRAND PRIX</div>
-          <div class="medal medal--2"><span><b>93</b>SOMELIE<br>GRAND PRIX</span></div>
+          <img class="medal medal--1" src="Resources/grand prix.png" alt="Somelie Collection Grand Prix">
+          <img class="medal medal--2" src="Resources/somelie.png" alt="93 Somelie Grand Prix">
           <span class="gal__tag">Хит</span>
           <span data-bottle="inici"></span>
         </div>
@@ -149,7 +151,7 @@
 
         <div class="blk">
           <div class="maker">
-            <span class="maker__img ph ph--vine"></span>
+            <img class="maker__img" src="Resources/Производитель.png" alt="Производитель Мерум Приорати" loading="lazy">
             <span class="maker__txt">
               <span class="p14 mut1">Производитель</span>
               <b class="h3" style="display:block">Мерум Приорати</b>
@@ -235,9 +237,7 @@
           </div>
           <div class="temp"><span class="p14 mut">Температура подачи</span><b>18°C – 20°C</b></div>
           <div>
-            <svg class="glass" viewBox="0 0 80 120" fill="none" stroke="#B9B9B9" stroke-width="1.4">
-              <path d="M22 6h36c0 22-6 30-14 34v52h10v4H26v-4h10V40C28 36 22 28 22 6Z"/>
-            </svg>
+            <img class="glass" src="Resources/Glass Wine.png" alt="Бокал для красного вина" loading="lazy">
             <b class="fw5">Бокал для красного вина</b>
             <p class="p14 mut3" style="margin-top:8px">Рекомендуется декантировать<br>за 2 часа до подачи</p>
           </div>
