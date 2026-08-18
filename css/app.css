@@ -406,8 +406,9 @@ svg.i44{width:44px;height:44px}
 .ach__row{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px}
 .ach__i{scroll-snap-align:start;flex:0 0 360px;min-width:0;display:flex;align-items:center;gap:16px;
         background:#F0E9D8;border-radius:48px;padding:8px 24px 8px 8px}
-.ach__m{width:80px;height:80px;border-radius:50%;flex:none;object-fit:cover;
+.ach__m{width:80px;height:80px;border-radius:50%;flex:none;object-fit:contain;
         background:radial-gradient(circle at 35% 30%,#fff,#d8cdb4 60%,#b9ab8a)}
+img.ach__m{background:none}
 .ach__i--off .ach__m{display:grid;place-items:center;font-size:28px;font-weight:700;color:var(--sub2);
                      background:#E4DCC7}
 .ach__x{min-width:0}
