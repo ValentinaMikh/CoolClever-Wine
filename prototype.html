@@ -375,6 +375,56 @@ svg.i44{width:44px;height:44px}
 .top5__img--fill{padding:0;overflow:hidden}
 .top5__img--fill img{object-fit:cover}
 
+/* ---------- «Напитки специально для Вас» ---------- */
+/* области: на десктопе ссылка справа от заголовка, на мобильном — под лентой */
+.recs{display:grid;align-items:center;gap:16px;margin-top:24px;
+      grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"t all" "row row"}
+.recs__t{grid-area:t;font-size:20px;font-weight:700}
+.recs__all{grid-area:all;justify-self:end;color:var(--somelie);font-size:14px}
+.recs__w{grid-area:row;position:relative;min-width:0}
+/* лента: шесть карточек в ряд, при нехватке места — горизонтальный скролл */
+.recs__row{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 80px)/6);gap:16px;
+           overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:4px}
+.recs__nav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;
+           background:var(--white);box-shadow:var(--shadow);display:grid;place-items:center;z-index:2}
+.recs__nav--l{left:-8px} .recs__nav--r{right:-8px}
+.rec{scroll-snap-align:start;min-width:0;display:flex;flex-direction:column;
+     border:1px solid var(--border);border-radius:12px;background:var(--white);overflow:hidden}
+.rec__img{position:relative;height:200px;background:var(--bg1);display:block;padding:16px}
+.rec__img img{width:100%;height:100%;object-fit:contain}
+.rec__fav{position:absolute;right:8px;bottom:8px;width:32px;height:32px;border-radius:50%;
+          background:var(--bg2);color:var(--white);display:grid;place-items:center}
+.rec__b{display:flex;flex-wrap:wrap;gap:4px;padding:8px 8px 0}
+.rec__b span{height:20px;padding:0 6px;border-radius:10px;background:var(--primary);color:var(--white);
+             font-size:11px;font-weight:500;display:inline-flex;align-items:center;gap:2px}
+.rec__n{padding:8px 8px 0;font-size:13px;line-height:1.3;
+        display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.rec__p{padding:8px 8px 0;font-size:22px;font-weight:700;line-height:1;white-space:nowrap}
+.rec__p sup{font-size:12px;font-weight:700;vertical-align:super}
+.rec__p em{font-style:normal;font-size:12px;font-weight:400;color:var(--sub1)}
+.rec .btn{margin:8px;padding:12px}
+
+/* ---------- достижения ---------- */
+.ach{background:#FBF3E2;border-radius:var(--r-xl);padding:24px;margin-top:24px}
+.ach__h{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px}
+.ach__t{font-size:28px;font-weight:700;line-height:1.2}
+.ach__share{display:inline-flex;align-items:center;gap:8px;font-size:16px}
+/* пилюли в ряд, лишние уезжают горизонтальным скроллом */
+.ach__row{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px}
+.ach__i{scroll-snap-align:start;flex:0 0 360px;min-width:0;display:flex;align-items:center;gap:16px;
+        background:#F0E9D8;border-radius:48px;padding:8px 24px 8px 8px}
+.ach__m{width:80px;height:80px;border-radius:50%;flex:none;object-fit:cover;
+        background:radial-gradient(circle at 35% 30%,#fff,#d8cdb4 60%,#b9ab8a)}
+.ach__i--off .ach__m{display:grid;place-items:center;font-size:28px;font-weight:700;color:var(--sub2);
+                     background:#E4DCC7}
+.ach__x{min-width:0}
+.ach__x b{display:block;font-size:16px;font-weight:700}
+.ach__x span{font-size:14px;color:var(--sub1)}
+/* полоса прокрутки как в макете */
+.ach__row::-webkit-scrollbar{height:6px}
+.ach__row::-webkit-scrollbar-thumb{background:#2E3033;border-radius:3px}
+.ach__row::-webkit-scrollbar-track{background:#E4DCC7;border-radius:3px}
+
 .geo{display:grid;grid-template-columns:1fr 1fr;gap:80px}
 .map-card{display:grid;justify-items:center;gap:24px}
 .map-card__img{width:100%;height:auto}
@@ -424,6 +474,8 @@ svg.i44{width:44px;height:44px}
 .cellar__i{background:#1F1F1F;border-radius:var(--r);padding:12px;text-align:center;display:grid;gap:4px}
 .cellar__i .bottle{width:70px;height:150px;margin:8px auto}
 .cellar__i small{font-size:11px;color:#bbb}
+.cellar__acts{display:flex;gap:8px;color:#bbb}
+.cellar__i .stars{display:block;text-align:center}
 .stars{color:var(--secondary);font-size:12px;letter-spacing:1px}
 .disclaimer{font-size:12px;line-height:1.5;color:var(--sub2);padding:24px 0}
 
@@ -597,6 +649,31 @@ html[data-toast="on"] .toast{transform:translateX(-50%)}
   .h1,.h2{font-size:26px}
   .h3,.sec__t,.blk__t{font-size:20px}
   .sect{padding:16px;border-radius:var(--r-lg)}
+  /* погреб: вкладки и карточки уезжают горизонтальным скроллом */
+  .cellar{padding:16px;border-radius:var(--r-lg)}
+  .cellar__h span:empty{display:none}   /* заголовок прижимается влево */
+  .cellar__tabs{flex-wrap:nowrap;overflow-x:auto;gap:4px}
+  .cellar__tab{flex:0 0 auto;padding:0 12px;white-space:nowrap}
+  .cellar__grid{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:132px;
+                overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:4px}
+  .cellar__i{scroll-snap-align:start;min-width:0}
+  /* достижения: медаль сверху, текст под ней; лента скроллится */
+  .ach{padding:16px;border-radius:var(--r-lg)}
+  .ach__t{font-size:18px}
+  .ach__share span{display:none}
+  .ach__row{gap:12px}
+  .ach__i{flex:0 0 132px;flex-direction:column;align-items:center;text-align:center;
+          gap:8px;border-radius:var(--r-lg);padding:12px 8px;background:none}
+  .ach__m{width:96px;height:96px}
+  .ach__x b{font-size:14px}
+  .ach__x span{font-size:12px;line-height:1.25}
+  /* карусель товаров: две с небольшим карточки в кадре, ссылка уходит вниз */
+  .recs{grid-template-columns:minmax(0,1fr);grid-template-areas:"t" "row" "all";gap:12px}
+  .recs__all{justify-self:center}
+  .recs__nav{display:none}
+  .recs__row{grid-auto-columns:144px}
+  .rec__img{height:140px;padding:12px}
+  .rec__p{font-size:18px}
   /* рейтинг: одна карточка на экран, остальные — скроллом */
   .rate__t{font-size:24px}
   .rate__row{grid-auto-columns:max(320px, calc(100% - 48px))}
@@ -637,9 +714,6 @@ html[data-toast="on"] .toast{transform:translateX(-50%)}
   .podium{gap:8px}
   .pod{padding:12px 6px}
   .pod__b .bottle{height:110px}
-  .cellar__grid{grid-template-columns:repeat(2,1fr)}
-  .cellar__tabs{flex-wrap:wrap}
-  .cellar__tab{flex:1 0 45%}
   .ftr__in{grid-template-columns:1fr}
   .ftr__bottom-in{flex-direction:column;align-items:flex-start}
   .ftr__soc{flex-wrap:wrap}
@@ -939,6 +1013,86 @@ html:not([data-page="travels"]) .side-btn{display:none!important}
     </div>
   </section>
 </main>
+
+<!-- ============ рекомендации ============ -->
+<div class="wrap">
+  <section class="recs">
+    <h2 class="recs__t">Напитки специально для Вас</h2>
+    <a class="recs__all" href="#">Посмотреть все</a>
+    <div class="recs__w">
+      <button class="recs__nav recs__nav--l" aria-label="Назад"><i data-lucide="chevron-left" class="i20"></i></button>
+      <div class="recs__row">
+        <article class="rec">
+          <span class="rec__img">
+            <img src="Resources/Напитки топ 5.png" alt="" loading="lazy">
+            <button class="rec__fav" aria-label="В избранное"><i data-lucide="heart" class="i16"></i></button>
+          </span>
+          <span class="rec__b"><span><i data-lucide="thumbs-up" class="i16"></i></span><span>+1</span><span>КГЛ</span></span>
+          <span class="rec__n">вино игристое выдержанное МЕЗОН ДЮ ВИНЬЕРОН КРЕМАН ДЕ ЛУАР</span>
+          <span class="rec__p">3 300<sup>00</sup> <em>₽/шт</em></span>
+          <button class="btn btn--somelie"><i data-lucide="shopping-cart" class="i20"></i>Добавить</button>
+        </article>
+
+        <article class="rec">
+          <span class="rec__img">
+            <img src="Resources/Напитки топ 5.png" alt="" loading="lazy">
+            <button class="rec__fav" aria-label="В избранное"><i data-lucide="heart" class="i16"></i></button>
+          </span>
+          <span class="rec__b"><span><i data-lucide="thumbs-up" class="i16"></i></span><span>+1</span><span>КГЛ</span></span>
+          <span class="rec__n">вино игристое выдержанное МЕЗОН ДЮ ВИНЬЕРОН КРЕМАН ДЕ ЛУАР</span>
+          <span class="rec__p">3 300<sup>00</sup> <em>₽/шт</em></span>
+          <button class="btn btn--somelie"><i data-lucide="shopping-cart" class="i20"></i>Добавить</button>
+        </article>
+
+        <article class="rec">
+          <span class="rec__img">
+            <img src="Resources/Напитки топ 5.png" alt="" loading="lazy">
+            <button class="rec__fav" aria-label="В избранное"><i data-lucide="heart" class="i16"></i></button>
+          </span>
+          <span class="rec__b"><span><i data-lucide="thumbs-up" class="i16"></i></span><span>+1</span><span>КГЛ</span></span>
+          <span class="rec__n">вино игристое выдержанное МЕЗОН ДЮ ВИНЬЕРОН КРЕМАН ДЕ ЛУАР</span>
+          <span class="rec__p">3 300<sup>00</sup> <em>₽/шт</em></span>
+          <button class="btn btn--somelie"><i data-lucide="shopping-cart" class="i20"></i>Добавить</button>
+        </article>
+
+        <article class="rec">
+          <span class="rec__img">
+            <img src="Resources/Напитки топ 5.png" alt="" loading="lazy">
+            <button class="rec__fav" aria-label="В избранное"><i data-lucide="heart" class="i16"></i></button>
+          </span>
+          <span class="rec__b"><span><i data-lucide="thumbs-up" class="i16"></i></span><span>+1</span><span>КГЛ</span></span>
+          <span class="rec__n">вино игристое выдержанное МЕЗОН ДЮ ВИНЬЕРОН КРЕМАН ДЕ ЛУАР</span>
+          <span class="rec__p">3 300<sup>00</sup> <em>₽/шт</em></span>
+          <button class="btn btn--somelie"><i data-lucide="shopping-cart" class="i20"></i>Добавить</button>
+        </article>
+
+        <article class="rec">
+          <span class="rec__img">
+            <img src="Resources/Напитки топ 5.png" alt="" loading="lazy">
+            <button class="rec__fav" aria-label="В избранное"><i data-lucide="heart" class="i16"></i></button>
+          </span>
+          <span class="rec__b"><span><i data-lucide="thumbs-up" class="i16"></i></span><span>+1</span><span>КГЛ</span></span>
+          <span class="rec__n">вино игристое выдержанное МЕЗОН ДЮ ВИНЬЕРОН КРЕМАН ДЕ ЛУАР</span>
+          <span class="rec__p">3 300<sup>00</sup> <em>₽/шт</em></span>
+          <button class="btn btn--somelie"><i data-lucide="shopping-cart" class="i20"></i>Добавить</button>
+        </article>
+
+        <article class="rec">
+          <span class="rec__img">
+            <img src="Resources/Напитки топ 5.png" alt="" loading="lazy">
+            <button class="rec__fav" aria-label="В избранное"><i data-lucide="heart" class="i16"></i></button>
+          </span>
+          <span class="rec__b"><span><i data-lucide="thumbs-up" class="i16"></i></span><span>+1</span><span>КГЛ</span></span>
+          <span class="rec__n">вино игристое выдержанное МЕЗОН ДЮ ВИНЬЕРОН КРЕМАН ДЕ ЛУАР</span>
+          <span class="rec__p">3 300<sup>00</sup> <em>₽/шт</em></span>
+          <button class="btn btn--somelie"><i data-lucide="shopping-cart" class="i20"></i>Добавить</button>
+        </article>
+      </div>
+      <button class="recs__nav recs__nav--r" aria-label="Вперёд"><i data-lucide="chevron-right" class="i20"></i></button>
+    </div>
+  </section>
+</div>
+
 </section>
 
 <section class="page" id="page-travels">
@@ -1183,6 +1337,36 @@ html:not([data-page="travels"]) .side-btn{display:none!important}
       </div>
     </section>
 
+    <!-- ============ достижения ============ -->
+    <section class="ach">
+      <div class="ach__h">
+        <h2 class="ach__t">Достижений открыто: 2 из 13</h2>
+        <button class="ach__share"><i data-lucide="share-2" class="i20"></i><span>Поделиться</span></button>
+      </div>
+      <div class="ach__row">
+        <div class="ach__i">
+          <span class="ach__m"></span>
+          <span class="ach__x"><b>Розовый фламинго</b><span>Вы впервые попробовали Розовое вино</span></span>
+        </div>
+        <div class="ach__i">
+          <span class="ach__m"></span>
+          <span class="ach__x"><b>Коллекционер 1 ур.</b><span>Вы добавили 10 напитков в свой винный погреб</span></span>
+        </div>
+        <div class="ach__i ach__i--off">
+          <span class="ach__m">?</span>
+          <span class="ach__x"><b>Сомелье 1 ур.</b><span>Попробуй напитки из 5 разных регионов</span></span>
+        </div>
+        <div class="ach__i ach__i--off">
+          <span class="ach__m">?</span>
+          <span class="ach__x"><b>Любитель новинок</b><span>Открой для себя 10 новинок КуулКлевер</span></span>
+        </div>
+        <div class="ach__i ach__i--off">
+          <span class="ach__m">?</span>
+          <span class="ach__x"><b>Путешественник</b><span>Открой вина из 3 разных стран</span></span>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ лента отзывов ============ -->
     <section class="revs">
       <h2 class="revs__t">Лента отзывов</h2>
@@ -1352,16 +1536,22 @@ html:not([data-page="travels"]) .side-btn{display:none!important}
     </div>
     <div class="cellar__grid">
       <a class="cellar__i" href="#product"><span class="stars">★★★★★</span>
+        <span class="cellar__acts"><i data-lucide="message-square" class="i16"></i><i data-lucide="bookmark" class="i16"></i></span>
         <span data-bottle="inici"></span><small>Merum Priorati Inici, 2021</small></a>
       <a class="cellar__i" href="#product"><span class="stars">★★★★★</span>
+        <span class="cellar__acts"><i data-lucide="message-square" class="i16"></i><i data-lucide="bookmark" class="i16"></i></span>
         <span data-bottle="inici"></span><small>Merum Priorati Inici, 2021</small></a>
       <a class="cellar__i" href="#product"><span class="stars">★★★★★</span>
+        <span class="cellar__acts"><i data-lucide="message-square" class="i16"></i><i data-lucide="bookmark" class="i16"></i></span>
         <span data-bottle="inici"></span><small>Merum Priorati Inici, 2021</small></a>
       <a class="cellar__i" href="#product"><span class="stars">★★★★★</span>
+        <span class="cellar__acts"><i data-lucide="message-square" class="i16"></i><i data-lucide="bookmark" class="i16"></i></span>
         <span data-bottle="inici"></span><small>Merum Priorati Inici, 2021</small></a>
       <a class="cellar__i" href="#product"><span class="stars">★★★★★</span>
+        <span class="cellar__acts"><i data-lucide="message-square" class="i16"></i><i data-lucide="bookmark" class="i16"></i></span>
         <span data-bottle="inici"></span><small>Merum Priorati Inici, 2021</small></a>
       <a class="cellar__i" href="#product"><span class="stars">★★★★★</span>
+        <span class="cellar__acts"><i data-lucide="message-square" class="i16"></i><i data-lucide="bookmark" class="i16"></i></span>
         <span data-bottle="inici"></span><small>Merum Priorati Inici, 2021</small></a>
     </div>
   </section>
